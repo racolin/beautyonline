@@ -36,9 +36,12 @@ def addCategory():
 
 class Order(View):
     def get(self, request):
+        username = get_username(request)
+        if username == "":
+            return redirect('login')
         name = get_name(request)
         carts, total = displayCart(request.session.get('carts', ""))
-        khachhang = KhachHang.objects.filter(MaKH__exact=get_username(request)).first()
+        khachhang = KhachHang.objects.filter(MaKH__exact=username).first()
         xa = khachhang.MaXa
         transport = 0
         content = {}

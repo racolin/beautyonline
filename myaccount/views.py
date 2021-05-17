@@ -17,6 +17,8 @@ from datetime import datetime
 class MyAccount(View):
     def get(self, request):
         username = get_username(request)
+        if username == "":
+            return redirect('login')
         phone = KhachHang.objects.filter(MaKH__exact=username).first().SDT
         phone = phone or ""
         content = {'name_user': get_name(request), 'username': username, 'phone': phone}
@@ -29,6 +31,8 @@ class MyAccount(View):
 class MyOrders(View):
     def get(self, request):
         username = get_username(request)
+        if username == "":
+            return redirect('login')
         phone = KhachHang.objects.filter(MaKH__exact=username).first().SDT
         phone = phone or ""
         content = {'name_user': get_name(request), 'username': username, 'phone': phone}
@@ -48,6 +52,8 @@ class MyOrders(View):
 class MyAddress(View):
     def get(self, request):
         username = get_username(request)
+        if username == "":
+            return redirect('login')
         phone = KhachHang.objects.filter(MaKH__exact=username).first().SDT
         phone = phone or ""
         content = {'name_user': get_name(request), 'username': username, 'phone': phone}
@@ -84,6 +90,8 @@ def addComment(request):
     description = request.POST.get("description", "")
     thoigian = datetime.now()
     username = get_username(request)
+    if username == "":
+        return redirect('login')
     kh = KhachHang.objects.filter(MaKH__exact=username).first()
     sp = SanPham.objects.filter(MaSP__exact=MaSP).first()
     cm = Comment()
@@ -210,6 +218,8 @@ def Login(request):
     
 def DetailOrder(request, *args, **kwargs):
     username = get_username(request)
+    if username == "":
+        return redirect('login')
     phone = KhachHang.objects.filter(MaKH__exact=username).first().SDT
     phone = phone or ""
     content = {'name_user': get_name(request), 'username': username, 'phone': phone}
