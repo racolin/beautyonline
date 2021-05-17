@@ -1,40 +1,3 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
---
--- Host: localhost    Database: register
--- ------------------------------------------------------
--- Server version	8.0.19
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `anhsanpham`
---
-
-DROP TABLE IF EXISTS `anhsanpham`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `anhsanpham` (
-  `NguonAnh` varchar(50) NOT NULL,
-  `LoaiAnh` tinyint(1) NOT NULL,
-  `MaSP_id` varchar(20) NOT NULL,
-  PRIMARY KEY (`NguonAnh`),
-  KEY `ANHSANPHAM_MaSP_id_cd4e0e88_fk_SANPHAM_MaSP` (`MaSP_id`),
-  CONSTRAINT `ANHSANPHAM_MaSP_id_cd4e0e88_fk_SANPHAM_MaSP` FOREIGN KEY (`MaSP_id`) REFERENCES `sanpham` (`MaSP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `anhsanpham`
---
 
 LOCK TABLES `anhsanpham` WRITE;
 /*!40000 ALTER TABLE `anhsanpham` DISABLE KEYS */;
@@ -42,200 +5,6 @@ INSERT INTO `anhsanpham` VALUES ('/images/SP0001-1.jpg',0,'SP0001'),('/images/SP
 /*!40000 ALTER TABLE `anhsanpham` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `auth_group`
---
-
-DROP TABLE IF EXISTS `auth_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_group` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_group`
---
-
-LOCK TABLES `auth_group` WRITE;
-/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_group_permissions`
---
-
-DROP TABLE IF EXISTS `auth_group_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_group_permissions` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `group_id` int NOT NULL,
-  `permission_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
-  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_group_permissions`
---
-
-LOCK TABLES `auth_group_permissions` WRITE;
-/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_permission`
---
-
-DROP TABLE IF EXISTS `auth_permission`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_permission` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `content_type_id` int NOT NULL,
-  `codename` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
-  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_permission`
---
-
-LOCK TABLES `auth_permission` WRITE;
-/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
-INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add kho hang',7,'add_khohang'),(26,'Can change kho hang',7,'change_khohang'),(27,'Can delete kho hang',7,'delete_khohang'),(28,'Can view kho hang',7,'view_khohang'),(29,'Can add loai san pham',8,'add_loaisanpham'),(30,'Can change loai san pham',8,'change_loaisanpham'),(31,'Can delete loai san pham',8,'delete_loaisanpham'),(32,'Can view loai san pham',8,'view_loaisanpham'),(33,'Can add thuong hieu',9,'add_thuonghieu'),(34,'Can change thuong hieu',9,'change_thuonghieu'),(35,'Can delete thuong hieu',9,'delete_thuonghieu'),(36,'Can view thuong hieu',9,'view_thuonghieu'),(37,'Can add san pham',10,'add_sanpham'),(38,'Can change san pham',10,'change_sanpham'),(39,'Can delete san pham',10,'delete_sanpham'),(40,'Can view san pham',10,'view_sanpham'),(41,'Can add nhap kho',11,'add_nhapkho'),(42,'Can change nhap kho',11,'change_nhapkho'),(43,'Can delete nhap kho',11,'delete_nhapkho'),(44,'Can view nhap kho',11,'view_nhapkho'),(45,'Can add giam gia',12,'add_giamgia'),(46,'Can change giam gia',12,'change_giamgia'),(47,'Can delete giam gia',12,'delete_giamgia'),(48,'Can view giam gia',12,'view_giamgia'),(49,'Can add comment',13,'add_comment'),(50,'Can change comment',13,'change_comment'),(51,'Can delete comment',13,'delete_comment'),(52,'Can view comment',13,'view_comment'),(53,'Can add anh san pham',14,'add_anhsanpham'),(54,'Can change anh san pham',14,'change_anhsanpham'),(55,'Can delete anh san pham',14,'delete_anhsanpham'),(56,'Can view anh san pham',14,'view_anhsanpham'),(57,'Can add huyen',15,'add_huyen'),(58,'Can change huyen',15,'change_huyen'),(59,'Can delete huyen',15,'delete_huyen'),(60,'Can view huyen',15,'view_huyen'),(61,'Can add khach hang',16,'add_khachhang'),(62,'Can change khach hang',16,'change_khachhang'),(63,'Can delete khach hang',16,'delete_khachhang'),(64,'Can view khach hang',16,'view_khachhang'),(65,'Can add tinh',17,'add_tinh'),(66,'Can change tinh',17,'change_tinh'),(67,'Can delete tinh',17,'delete_tinh'),(68,'Can view tinh',17,'view_tinh'),(69,'Can add van chuyen',18,'add_vanchuyen'),(70,'Can change van chuyen',18,'change_vanchuyen'),(71,'Can delete van chuyen',18,'delete_vanchuyen'),(72,'Can view van chuyen',18,'view_vanchuyen'),(73,'Can add xa',19,'add_xa'),(74,'Can change xa',19,'change_xa'),(75,'Can delete xa',19,'delete_xa'),(76,'Can view xa',19,'view_xa'),(77,'Can add chi tiet hoa don',20,'add_chitiethoadon'),(78,'Can change chi tiet hoa don',20,'change_chitiethoadon'),(79,'Can delete chi tiet hoa don',20,'delete_chitiethoadon'),(80,'Can view chi tiet hoa don',20,'view_chitiethoadon'),(81,'Can add hoa don',21,'add_hoadon'),(82,'Can change hoa don',21,'change_hoadon'),(83,'Can delete hoa don',21,'delete_hoadon'),(84,'Can view hoa don',21,'view_hoadon'),(85,'Can add khoang gia',22,'add_khoanggia'),(86,'Can change khoang gia',22,'change_khoanggia'),(87,'Can delete khoang gia',22,'delete_khoanggia'),(88,'Can view khoang gia',22,'view_khoanggia'),(89,'Can add khoang gia',23,'add_khoanggia'),(90,'Can change khoang gia',23,'change_khoanggia'),(91,'Can delete khoang gia',23,'delete_khoanggia'),(92,'Can view khoang gia',23,'view_khoanggia'),(93,'Can add sap xep',24,'add_sapxep'),(94,'Can change sap xep',24,'change_sapxep'),(95,'Can delete sap xep',24,'delete_sapxep'),(96,'Can view sap xep',24,'view_sapxep'),(97,'Can add lien he',25,'add_lienhe'),(98,'Can change lien he',25,'change_lienhe'),(99,'Can delete lien he',25,'delete_lienhe'),(100,'Can view lien he',25,'view_lienhe');
-/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_user`
---
-
-DROP TABLE IF EXISTS `auth_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `password` varchar(128) NOT NULL,
-  `last_login` datetime(6) DEFAULT NULL,
-  `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) NOT NULL,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `email` varchar(254) NOT NULL,
-  `is_staff` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `date_joined` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_user`
---
-
-LOCK TABLES `auth_user` WRITE;
-/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$260000$eWWL3X8dHfb8WOHdPmWg0F$IRILNouwUbNnIQcFRDH+ERHJLYeoAwYOj8759f8VKTU=','2021-05-12 19:01:26.911596',1,'tinphan','','','phantrungtin01@gmail.com',1,1,'2021-05-12 19:01:08.317200');
-/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_user_groups`
---
-
-DROP TABLE IF EXISTS `auth_user_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_user_groups` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `group_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
-  KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
-  CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
-  CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_user_groups`
---
-
-LOCK TABLES `auth_user_groups` WRITE;
-/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_user_user_permissions`
---
-
-DROP TABLE IF EXISTS `auth_user_user_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_user_user_permissions` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `permission_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
-  KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_user_user_permissions`
---
-
-LOCK TABLES `auth_user_user_permissions` WRITE;
-/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `chitiethoadon`
---
-
-DROP TABLE IF EXISTS `chitiethoadon`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `chitiethoadon` (
-  `MaCTHD` varchar(20) NOT NULL,
-  `GiaBan` bigint NOT NULL,
-  `SoLuong` bigint NOT NULL,
-  `MaHD_id` varchar(20) NOT NULL,
-  `MaSP_id` varchar(20) NOT NULL,
-  PRIMARY KEY (`MaCTHD`),
-  KEY `CHITIETHOADON_MaHD_id_4cfdc078_fk_HOADON_MaHD` (`MaHD_id`),
-  KEY `CHITIETHOADON_MaSP_id_251dd49a_fk_SANPHAM_MaSP` (`MaSP_id`),
-  CONSTRAINT `CHITIETHOADON_MaHD_id_4cfdc078_fk_HOADON_MaHD` FOREIGN KEY (`MaHD_id`) REFERENCES `hoadon` (`MaHD`),
-  CONSTRAINT `CHITIETHOADON_MaSP_id_251dd49a_fk_SANPHAM_MaSP` FOREIGN KEY (`MaSP_id`) REFERENCES `sanpham` (`MaSP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `chitiethoadon`
---
 
 LOCK TABLES `chitiethoadon` WRITE;
 /*!40000 ALTER TABLE `chitiethoadon` DISABLE KEYS */;
@@ -243,57 +12,13 @@ INSERT INTO `chitiethoadon` VALUES ('CTHD000001',250000,1,'HD00001','SP0004'),('
 /*!40000 ALTER TABLE `chitiethoadon` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `comment`
---
-
-DROP TABLE IF EXISTS `comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `comment` (
-  `MaCM` int NOT NULL AUTO_INCREMENT,
-  `ChiTietCM` varchar(2000) NOT NULL,
-  `MaKH_id` varchar(20) NOT NULL,
-  `MaSP_id` varchar(20) NOT NULL,
-  `Rate` int NOT NULL,
-  `ThoiGian` datetime(6) NOT NULL,
-  PRIMARY KEY (`MaCM`),
-  KEY `COMMENT_MaKH_id_f9f9d20f_fk_KHACHHANG_MaKH` (`MaKH_id`),
-  KEY `COMMENT_MaSP_id_26299c9a_fk_SANPHAM_MaSP` (`MaSP_id`),
-  CONSTRAINT `COMMENT_MaKH_id_f9f9d20f_fk_KHACHHANG_MaKH` FOREIGN KEY (`MaKH_id`) REFERENCES `khachhang` (`MaKH`),
-  CONSTRAINT `COMMENT_MaSP_id_26299c9a_fk_SANPHAM_MaSP` FOREIGN KEY (`MaSP_id`) REFERENCES `sanpham` (`MaSP`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `comment`
---
-
+-
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
 INSERT INTO `comment` VALUES (20,'Sản phẩm rất rốt','KH000001','SP0001',3,'2021-05-13 15:34:42.549054'),(21,'Rất là phù hợp','KH000001','SP0005',5,'2021-05-13 16:29:37.719524'),(22,'Tạm được','KH000001','SP0005',3,'2021-05-13 16:29:46.985976'),(23,'Quá tệ','KH000001','SP0005',1,'2021-05-13 16:30:01.634856');
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `core_lienhe`
---
-
-DROP TABLE IF EXISTS `core_lienhe`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `core_lienhe` (
-  `MaLH` int NOT NULL AUTO_INCREMENT,
-  `HoTen` varchar(50) NOT NULL,
-  `Email` varchar(50) NOT NULL,
-  `SDT` varchar(11) NOT NULL,
-  `NoiDung` varchar(500) NOT NULL,
-  PRIMARY KEY (`MaLH`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `core_lienhe`
 --
 
 LOCK TABLES `core_lienhe` WRITE;
@@ -302,140 +27,6 @@ INSERT INTO `core_lienhe` VALUES (1,'Phan Trung Tín','19110475@gmail.com','0868
 /*!40000 ALTER TABLE `core_lienhe` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `django_admin_log`
---
-
-DROP TABLE IF EXISTS `django_admin_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_admin_log` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `action_time` datetime(6) NOT NULL,
-  `object_id` longtext,
-  `object_repr` varchar(200) NOT NULL,
-  `action_flag` smallint unsigned NOT NULL,
-  `change_message` longtext NOT NULL,
-  `content_type_id` int DEFAULT NULL,
-  `user_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
-  KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
-  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
-  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
-  CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `django_admin_log`
---
-
-LOCK TABLES `django_admin_log` WRITE;
-/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `django_content_type`
---
-
-DROP TABLE IF EXISTS `django_content_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_content_type` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `app_label` varchar(100) NOT NULL,
-  `model` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `django_content_type`
---
-
-LOCK TABLES `django_content_type` WRITE;
-/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(15,'core','huyen'),(16,'core','khachhang'),(22,'core','khoanggia'),(25,'core','lienhe'),(17,'core','tinh'),(18,'core','vanchuyen'),(19,'core','xa'),(20,'myaccount','chitiethoadon'),(21,'myaccount','hoadon'),(14,'product','anhsanpham'),(13,'product','comment'),(12,'product','giamgia'),(23,'product','khoanggia'),(7,'product','khohang'),(8,'product','loaisanpham'),(11,'product','nhapkho'),(10,'product','sanpham'),(24,'product','sapxep'),(9,'product','thuonghieu'),(6,'sessions','session');
-/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `django_migrations`
---
-
-DROP TABLE IF EXISTS `django_migrations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_migrations` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `app` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `applied` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `django_migrations`
---
-
-LOCK TABLES `django_migrations` WRITE;
-/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2021-05-09 01:14:25.803378'),(2,'auth','0001_initial','2021-05-09 01:14:26.692323'),(3,'admin','0001_initial','2021-05-09 01:14:26.882708'),(4,'admin','0002_logentry_remove_auto_add','2021-05-09 01:14:26.895187'),(5,'admin','0003_logentry_add_action_flag_choices','2021-05-09 01:14:26.905885'),(6,'contenttypes','0002_remove_content_type_name','2021-05-09 01:14:27.037392'),(7,'auth','0002_alter_permission_name_max_length','2021-05-09 01:14:27.118230'),(8,'auth','0003_alter_user_email_max_length','2021-05-09 01:14:27.154620'),(9,'auth','0004_alter_user_username_opts','2021-05-09 01:14:27.166272'),(10,'auth','0005_alter_user_last_login_null','2021-05-09 01:14:27.239282'),(11,'auth','0006_require_contenttypes_0002','2021-05-09 01:14:27.244440'),(12,'auth','0007_alter_validators_add_error_messages','2021-05-09 01:14:27.257439'),(13,'auth','0008_alter_user_username_max_length','2021-05-09 01:14:27.357273'),(14,'auth','0009_alter_user_last_name_max_length','2021-05-09 01:14:27.502736'),(15,'auth','0010_alter_group_name_max_length','2021-05-09 01:14:27.536371'),(16,'auth','0011_update_proxy_permissions','2021-05-09 01:14:27.548149'),(17,'auth','0012_alter_user_first_name_max_length','2021-05-09 01:14:27.626465'),(18,'core','0001_initial','2021-05-09 01:14:27.656099'),(19,'core','0002_auto_20210509_0814','2021-05-09 01:14:28.052804'),(20,'product','0001_initial','2021-05-09 01:14:29.332524'),(21,'sessions','0001_initial','2021-05-09 01:14:29.389433'),(22,'product','0002_auto_20210509_1151','2021-05-09 04:51:13.954693'),(23,'product','0003_sanpham_soluong','2021-05-09 06:09:45.706122'),(24,'product','0004_alter_sanpham_soluong','2021-05-09 06:10:54.022145'),(25,'product','0005_delete_khohang','2021-05-09 06:27:16.308165'),(26,'myaccount','0001_initial','2021-05-09 06:35:25.171887'),(27,'core','0003_khoanggia','2021-05-09 16:21:57.487594'),(28,'core','0004_delete_khoanggia','2021-05-09 16:27:06.905539'),(29,'product','0006_khoanggia','2021-05-09 16:27:06.942695'),(30,'core','0005_auto_20210510_2221','2021-05-10 15:21:13.437580'),(31,'product','0007_sapxep','2021-05-11 03:13:36.310957'),(32,'product','0008_alter_sapxep_masx','2021-05-11 03:26:00.040526'),(33,'myaccount','0002_alter_hoadon_ngaythanhtoan','2021-05-12 05:20:54.882322'),(34,'myaccount','0003_rename_ngaythanhtoan_hoadon_ngaydathang','2021-05-12 05:55:30.343392'),(35,'myaccount','0004_auto_20210512_1914','2021-05-12 12:14:49.987311'),(36,'myaccount','0005_auto_20210512_1915','2021-05-12 12:21:25.399788'),(37,'myaccount','0006_hoadon_vanchuyen','2021-05-12 12:49:11.567323'),(38,'myaccount','0007_alter_hoadon_vanchuyen','2021-05-12 12:49:22.034996'),(39,'myaccount','0008_remove_hoadon_diachigh','2021-05-12 12:52:40.613809'),(40,'product','0009_auto_20210513_0941','2021-05-13 02:41:50.532227'),(41,'product','0010_auto_20210513_0942','2021-05-13 02:42:23.946520'),(42,'product','0011_alter_comment_macm','2021-05-13 03:05:51.703866'),(43,'core','0006_lienhe','2021-05-13 10:50:44.128217');
-/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `django_session`
---
-
-DROP TABLE IF EXISTS `django_session`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `django_session` (
-  `session_key` varchar(40) NOT NULL,
-  `session_data` longtext NOT NULL,
-  `expire_date` datetime(6) NOT NULL,
-  PRIMARY KEY (`session_key`),
-  KEY `django_session_expire_date_a5c62663` (`expire_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `django_session`
---
-
-LOCK TABLES `django_session` WRITE;
-/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('2iymac31drbkm5wjeixkb4o96dpeuu4b','eyJuYW1lIjoiUGhhbiBUcnVuZyBUXHUwMGVkbiAyIn0:1lgHGL:SbPR05YOiV11y5OX08NHSQhGgtGQDu5-KYX6-9ws2lU','2021-05-25 01:32:41.609078'),('3mc9t0c1nvuehq3gjj5l0juqnceh36tk','eyJuYW1lIjoiUGhhbiBUcnVuZyBUXHUwMGVkbiAyIiwidXNlcm5hbWUiOiJLSDAwMDAwMiJ9:1lh6eL:KRa6XA-KNyK_P1GsaKfV0Z_G77XRBCW1VvRglG5mJEA','2021-05-27 08:24:53.063132'),('btxjigfln9ezg9w58tu1abpb3ibzfkvz','eyJuYW1lIjoiTmd1eVx1MWVjNW4gVlx1MDEwM24gQSIsInVzZXJuYW1lIjoidGlucGhhbjExIn0:1lgfaw:Yr83ZHuxvfk4rDo4AAOqm9rsBYFQZzYER51Tc9mNK04','2021-05-26 03:31:34.471036'),('lwjh6i4ilkxs6p417tpm5lci4ax4vdts','.eJxVT8tqwzAQ_BWhXo0jye8c20ILwSGQ3JpiVi9bqS0H2zqUkH-v5OTSPQ07szszN-xmNVkYFN7i3ScJw3CEG3BL1wSuMdJT9P-Og_hRNhDyArYdYzHaZTI8DpL4yc5xPUrVvz61_x50MHf-WnOWZlkmMq0ozdMiT_KScZC5TIqM5qxUpSgSXaQyF2lCNaGgK0LKsqKaFVXlnz6zHzqw6DQ526LT2RGipEWhiIBpmfH264av0yidWPD2hms4HvzN8eDbhmYnZdfFTg1of3ZUCWpRDb9c9b2xCtXrjlu07wLiFdqZh2xA7wFA4dDbyknqE6w_QHv0QhlBCRl67_JhwHuwpIy8Lb5H2AzQhuybFcybR574cm29-joZoZoZeq-gFUkJiTAMo7O-Ab1_3_8AO3WH9g:1lhrgr:qXHtCHv35s1Qth4Kjpu79y-Bv35FfCwq3jOSOnc8sRQ','2021-05-29 10:38:37.222558');
-/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `giamgia`
---
-
-DROP TABLE IF EXISTS `giamgia`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `giamgia` (
-  `MaGG` varchar(20) NOT NULL,
-  `NgayBatDau` date NOT NULL,
-  `NgayKetThuc` date NOT NULL,
-  `PhanTram` double NOT NULL,
-  `MaSP_id` varchar(20) NOT NULL,
-  PRIMARY KEY (`MaGG`),
-  KEY `GIAMGIA_MaSP_id_348fa253_fk_SANPHAM_MaSP` (`MaSP_id`),
-  CONSTRAINT `GIAMGIA_MaSP_id_348fa253_fk_SANPHAM_MaSP` FOREIGN KEY (`MaSP_id`) REFERENCES `sanpham` (`MaSP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `giamgia`
---
 
 LOCK TABLES `giamgia` WRITE;
 /*!40000 ALTER TABLE `giamgia` DISABLE KEYS */;
@@ -443,34 +34,6 @@ INSERT INTO `giamgia` VALUES ('GG0001','2021-05-05','2021-05-20',0.2,'SP0003'),(
 /*!40000 ALTER TABLE `giamgia` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `hoadon`
---
-
-DROP TABLE IF EXISTS `hoadon`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `hoadon` (
-  `MaHD` varchar(20) NOT NULL,
-  `NgayDatHang` datetime(6) NOT NULL,
-  `ThanhTien` bigint NOT NULL,
-  `MaKH_id` varchar(20) NOT NULL,
-  `MaXaGH_id` varchar(20) NOT NULL,
-  `DiaChiNhan` varchar(100) NOT NULL,
-  `SDTNgNhan` varchar(11) NOT NULL,
-  `TenNgNhan` varchar(50) DEFAULT NULL,
-  `VanChuyen` bigint NOT NULL,
-  PRIMARY KEY (`MaHD`),
-  KEY `HOADON_MaKH_id_8d133f3b_fk_KHACHHANG_MaKH` (`MaKH_id`),
-  KEY `HOADON_MaXaGH_id_50b090e3_fk_XA_MaXa` (`MaXaGH_id`),
-  CONSTRAINT `HOADON_MaKH_id_8d133f3b_fk_KHACHHANG_MaKH` FOREIGN KEY (`MaKH_id`) REFERENCES `khachhang` (`MaKH`),
-  CONSTRAINT `HOADON_MaXaGH_id_50b090e3_fk_XA_MaXa` FOREIGN KEY (`MaXaGH_id`) REFERENCES `xa` (`MaXa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hoadon`
---
 
 LOCK TABLES `hoadon` WRITE;
 /*!40000 ALTER TABLE `hoadon` DISABLE KEYS */;
@@ -478,26 +41,6 @@ INSERT INTO `hoadon` VALUES ('HD00001','2021-03-11 00:00:00.000000',250000,'KH00
 /*!40000 ALTER TABLE `hoadon` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `huyen`
---
-
-DROP TABLE IF EXISTS `huyen`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `huyen` (
-  `MaHuyen` varchar(20) NOT NULL,
-  `TenHuyen` varchar(100) NOT NULL,
-  `MaTinh_id` varchar(20) NOT NULL,
-  PRIMARY KEY (`MaHuyen`),
-  KEY `HUYEN_MaTinh_id_887b3b97_fk_TINH_MaTinh` (`MaTinh_id`),
-  CONSTRAINT `HUYEN_MaTinh_id_887b3b97_fk_TINH_MaTinh` FOREIGN KEY (`MaTinh_id`) REFERENCES `tinh` (`MaTinh`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `huyen`
---
 
 LOCK TABLES `huyen` WRITE;
 /*!40000 ALTER TABLE `huyen` DISABLE KEYS */;
@@ -509,27 +52,7 @@ UNLOCK TABLES;
 -- Table structure for table `khachhang`
 --
 
-DROP TABLE IF EXISTS `khachhang`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `khachhang` (
-  `MaKH` varchar(20) NOT NULL,
-  `TenKH` varchar(100) NOT NULL,
-  `DiaChi` varchar(100) NOT NULL,
-  `SDT` varchar(11) DEFAULT NULL,
-  `Pass` varchar(20) NOT NULL,
-  `Login` varchar(20) NOT NULL,
-  `Email` varchar(50) NOT NULL,
-  `MaXa_id` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`MaKH`),
-  KEY `KHACHHANG_MaXa_id_adb41ce9_fk_XA_MaXa` (`MaXa_id`),
-  CONSTRAINT `KHACHHANG_MaXa_id_adb41ce9_fk_XA_MaXa` FOREIGN KEY (`MaXa_id`) REFERENCES `xa` (`MaXa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `khachhang`
---
 
 LOCK TABLES `khachhang` WRITE;
 /*!40000 ALTER TABLE `khachhang` DISABLE KEYS */;
@@ -537,24 +60,7 @@ INSERT INTO `khachhang` VALUES ('KH000001','Phan Trung','Đối diện Viettel V
 /*!40000 ALTER TABLE `khachhang` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `khoanggia`
---
 
-DROP TABLE IF EXISTS `khoanggia`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `khoanggia` (
-  `MaKG` varchar(10) NOT NULL,
-  `Gia_Min` bigint NOT NULL,
-  `Gia_Max` bigint NOT NULL,
-  PRIMARY KEY (`MaKG`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `khoanggia`
---
 
 LOCK TABLES `khoanggia` WRITE;
 /*!40000 ALTER TABLE `khoanggia` DISABLE KEYS */;
@@ -562,23 +68,6 @@ INSERT INTO `khoanggia` VALUES ('KG001',0,100000),('KG002',100000,200000),('KG00
 /*!40000 ALTER TABLE `khoanggia` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `loaisanpham`
---
-
-DROP TABLE IF EXISTS `loaisanpham`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `loaisanpham` (
-  `MaLSP` varchar(20) NOT NULL,
-  `TenLSP` varchar(100) NOT NULL,
-  PRIMARY KEY (`MaLSP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `loaisanpham`
---
 
 LOCK TABLES `loaisanpham` WRITE;
 /*!40000 ALTER TABLE `loaisanpham` DISABLE KEYS */;
@@ -586,28 +75,7 @@ INSERT INTO `loaisanpham` VALUES ('LSP001','Trang Điểm'),('LSP002','Chăm Só
 /*!40000 ALTER TABLE `loaisanpham` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `nhapkho`
---
 
-DROP TABLE IF EXISTS `nhapkho`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `nhapkho` (
-  `MaNhapKho` varchar(20) NOT NULL,
-  `SoLuong` int NOT NULL,
-  `NgayNhapKho` date NOT NULL,
-  `GiaNhap` bigint NOT NULL,
-  `MaSP_id` varchar(20) NOT NULL,
-  PRIMARY KEY (`MaNhapKho`),
-  KEY `NHAPKHO_MaSP_id_39cf6680_fk_SANPHAM_MaSP` (`MaSP_id`),
-  CONSTRAINT `NHAPKHO_MaSP_id_39cf6680_fk_SANPHAM_MaSP` FOREIGN KEY (`MaSP_id`) REFERENCES `sanpham` (`MaSP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `nhapkho`
---
 
 LOCK TABLES `nhapkho` WRITE;
 /*!40000 ALTER TABLE `nhapkho` DISABLE KEYS */;
@@ -615,34 +83,7 @@ INSERT INTO `nhapkho` VALUES ('NK0001',12,'2020-10-20',120000,'SP0001'),('NK0002
 /*!40000 ALTER TABLE `nhapkho` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `sanpham`
---
 
-DROP TABLE IF EXISTS `sanpham`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sanpham` (
-  `MaSP` varchar(20) NOT NULL,
-  `TenSP` varchar(100) NOT NULL,
-  `NgSanXuat` date NOT NULL,
-  `HanSuDung` date NOT NULL,
-  `MoTa` varchar(2000) NOT NULL,
-  `Gia` bigint NOT NULL,
-  `MaLSP_id` varchar(20) NOT NULL,
-  `MaTH_id` varchar(20) NOT NULL,
-  `SoLuong` int NOT NULL,
-  PRIMARY KEY (`MaSP`),
-  KEY `SANPHAM_MaLSP_id_becb13c2_fk_LOAISANPHAM_MaLSP` (`MaLSP_id`),
-  KEY `SANPHAM_MaTH_id_816b1531_fk_THUONGHIEU_MaTH` (`MaTH_id`),
-  CONSTRAINT `SANPHAM_MaLSP_id_becb13c2_fk_LOAISANPHAM_MaLSP` FOREIGN KEY (`MaLSP_id`) REFERENCES `loaisanpham` (`MaLSP`),
-  CONSTRAINT `SANPHAM_MaTH_id_816b1531_fk_THUONGHIEU_MaTH` FOREIGN KEY (`MaTH_id`) REFERENCES `thuonghieu` (`MaTH`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sanpham`
---
 
 LOCK TABLES `sanpham` WRITE;
 /*!40000 ALTER TABLE `sanpham` DISABLE KEYS */;
@@ -650,23 +91,7 @@ INSERT INTO `sanpham` VALUES ('SP0001','Kem Nền Maybelline Mịn Nhẹ Kiềm 
 /*!40000 ALTER TABLE `sanpham` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `sapxep`
---
 
-DROP TABLE IF EXISTS `sapxep`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `sapxep` (
-  `MaSX` varchar(50) NOT NULL,
-  `TenSX` varchar(50) NOT NULL,
-  PRIMARY KEY (`MaSX`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sapxep`
---
 
 LOCK TABLES `sapxep` WRITE;
 /*!40000 ALTER TABLE `sapxep` DISABLE KEYS */;
@@ -674,25 +99,7 @@ INSERT INTO `sapxep` VALUES ('-Gia','Giá giảm dần'),('-TenSP','Từ Z-A'),(
 /*!40000 ALTER TABLE `sapxep` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `thuonghieu`
---
 
-DROP TABLE IF EXISTS `thuonghieu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `thuonghieu` (
-  `MaTH` varchar(20) NOT NULL,
-  `TenTH` varchar(20) NOT NULL,
-  `XuatXu` varchar(100) NOT NULL,
-  `MoTa` varchar(2000) NOT NULL,
-  PRIMARY KEY (`MaTH`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `thuonghieu`
---
 
 LOCK TABLES `thuonghieu` WRITE;
 /*!40000 ALTER TABLE `thuonghieu` DISABLE KEYS */;
@@ -700,26 +107,6 @@ INSERT INTO `thuonghieu` VALUES ('TH0001','Maybelline','Mỹ','Với lịch sử
 /*!40000 ALTER TABLE `thuonghieu` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `tinh`
---
-
-DROP TABLE IF EXISTS `tinh`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tinh` (
-  `MaTinh` varchar(20) NOT NULL,
-  `TenTinh` varchar(100) NOT NULL,
-  `MaKV_id` varchar(20) NOT NULL,
-  PRIMARY KEY (`MaTinh`),
-  KEY `TINH_MaKV_id_86f07029_fk_VANCHUYEN_MaKV` (`MaKV_id`),
-  CONSTRAINT `TINH_MaKV_id_86f07029_fk_VANCHUYEN_MaKV` FOREIGN KEY (`MaKV_id`) REFERENCES `vanchuyen` (`MaKV`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tinh`
---
 
 LOCK TABLES `tinh` WRITE;
 /*!40000 ALTER TABLE `tinh` DISABLE KEYS */;
@@ -727,23 +114,6 @@ INSERT INTO `tinh` VALUES ('T0001','Thành phố Hà Nội','KV0005'),('T0002','
 /*!40000 ALTER TABLE `tinh` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `vanchuyen`
---
-
-DROP TABLE IF EXISTS `vanchuyen`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vanchuyen` (
-  `MaKV` varchar(20) NOT NULL,
-  `Gia` bigint NOT NULL,
-  PRIMARY KEY (`MaKV`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `vanchuyen`
---
 
 LOCK TABLES `vanchuyen` WRITE;
 /*!40000 ALTER TABLE `vanchuyen` DISABLE KEYS */;
@@ -751,26 +121,6 @@ INSERT INTO `vanchuyen` VALUES ('KV0001',30000),('KV0002',15000),('KV0003',34000
 /*!40000 ALTER TABLE `vanchuyen` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `xa`
---
-
-DROP TABLE IF EXISTS `xa`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `xa` (
-  `MaXa` varchar(20) NOT NULL,
-  `TenXa` varchar(100) NOT NULL,
-  `MaHuyen_id` varchar(20) NOT NULL,
-  PRIMARY KEY (`MaXa`),
-  KEY `XA_MaHuyen_id_b8d37715_fk_HUYEN_MaHuyen` (`MaHuyen_id`),
-  CONSTRAINT `XA_MaHuyen_id_b8d37715_fk_HUYEN_MaHuyen` FOREIGN KEY (`MaHuyen_id`) REFERENCES `huyen` (`MaHuyen`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `xa`
---
 
 LOCK TABLES `xa` WRITE;
 /*!40000 ALTER TABLE `xa` DISABLE KEYS */;
@@ -778,17 +128,3 @@ INSERT INTO `xa` VALUES ('X00001','Phường Phúc Xá','H0001'),('X00004','Phư
 /*!40000 ALTER TABLE `xa` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping routines for database 'register'
---
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2021-05-17  9:46:47
