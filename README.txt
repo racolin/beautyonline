@@ -10,3 +10,5 @@ thực hiện lần lượt các bước
 6. vào mysql đổ data vào các bảng đó. với cái file data đã up ở trên(chỉ lấy data của các bảng đổ vô)
 7. python manage.py runserver
 8. vào trình duyệt gõ 127:..../site/home(nhớ là có /site/home) ở dưới terminal có hiện click vô đó cũng đc
+Một số lỗi:
+ModuleNotFoundError: No module named 'MySQLdb': thiếu mysql-django, install bằng pip install django-mysql
