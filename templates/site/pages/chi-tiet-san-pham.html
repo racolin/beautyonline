@@ -1,0 +1,230 @@
+{% extends 'site/base.html' %}
+{% load static %}
+
+{% block title %}
+    Chi tiết sản phẩm - Mỹ Phẩm Beauty Online
+{% endblock title %}
+
+{% block blockcss %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.jpg' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free-5.11.2-web/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/star-rating/css/star-rating.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock blockcss %}
+
+{% block blockcontent %}
+    <main id="maincontent" class="page-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-9">
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'home' %}" target="_self">Trang chủ</a></li>
+                        <li><span>/</span></li>
+                        <li><span>{{category.TenLSP}}</span></li>
+                    </ol>
+                </div>
+                <div class="col-xs-3 hidden-lg hidden-md">
+                    <a class="hidden-lg pull-right btn-aside-mobile" href="javascript:void(0)">Bộ lọc <i class="fa fa-angle-double-right"></i></a>
+                </div>
+                <div class="clearfix"></div>
+                <aside class="col-md-3">
+                    <div class="inner-aside">
+                        <div class="category">
+                            <h5>Danh mục sản phẩm</h5>
+                            <ul>
+                                {% for item in types %}
+                                    <li class="
+                                    {% if item.MaLSP == category.MaLSP %}
+                                        active
+                                    {% endif %}
+                                    ">
+                                        <a href="{% url 'mode.category' mode=menu id_category=item.MaLSP %}" title="{{item.MaLSP}}" target="_self">{{item.TenLSP}}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="price-range">
+                            <h5>Khoảng giá</h5>
+                            <ul>
+                            {% for price_range in price_ranges %}
+                                <li >
+                                    <label for="filter-less-100">
+                                    <input  type="radio" id="filter-less-100" name="filter-price" value="{{price_range.Ma}}" disabled>
+                                    <i class="fa"></i>
+                                    {{price_range.price}}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+                <div class="col-md-9 product-detail">
+                    <div class="row product-info">
+                        <div class="col-md-6">
+                            <img data-zoom-image="{% static image %}" class="img-responsive thumbnail main-image-thumbnail" src="{% static image %}" alt="{% static image %}">
+                            <div class="product-detail-carousel-slider">
+                                <div class="owl-carousel owl-theme">
+                                    {% for image in images %}
+                                        <div class="item thumbnail"><img src="{% static image.NguonAnh %}" alt="{% static image.NguonAnh %}"></div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="product-name">{{product.TenSP}}</h5>
+                            <div class="brand">
+                                <span>Nhãn hàng: </span> <span>{{product.MaTH.TenTH}}</span> 
+                            </div>
+                            <div class="product-status"> 
+                                <span>Trạng thái: </span>
+                                <span class="label-warning">
+                                    {% if product.SoLuong > 0 %}
+                                        Còn hàng
+                                    {% else %}
+                                        Hết hàng
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="product-item-price">
+                                <span>Giá: </span>
+                                {% if price_sale != product.Gia %}
+                                    <span class="product-item-no-discount">{{product.Gia}}₫</span>  
+                                {% endif %} 
+                                <span class="product-item-discount">{{price_sale}}₫</span>           
+                            </div>
+                            <div>
+                                <label>Được mọi người đánh giá: </label>
+                                <input class="rating-input" name="rating" type="text" title="" value="{{average}}"/>
+                            </div>
+                            <a class="btn btn-outline-inverse buy addCart" product-id="{{product.MaSP}}" href="javascript:void(0)" title="Thêm vào giỏ">
+                                Đặt ngay <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row product-description">
+                        <div class="col-xs-12">
+                            <div role="tabpanel">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#product-description" aria-controls="home" role="tab" data-toggle="tab">Mô tả</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#product-comment" aria-controls="tab" role="tab" data-toggle="tab">Đánh giá</a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="product-description">   
+                                    <p>Mô tả chi tiết</p>
+                                    <p>{{product.MoTa}}</p>
+                                    <input type="hidden" value="{{current_comment}}" name="current_comment"></input>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="product-comment">
+                                        <form class="form-comment" action="{% url 'addcomment' %}" method="POST" role="form">
+                                        {% csrf_token %}
+                                            <label>Đánh giá của bạn</label>
+                                            <div class="form-group">
+                                                <input name="MaSP" value="{{product.MaSP}}" type="hidden">
+                                                <input name="mode" value="{{menu}}" type="hidden">
+                                                <input class="rating-input" name="rating" type="text" title="" value="4"/>
+                                                <textarea name="description" id="input" class="form-control" rows="3" required placeholder="Nội dung *"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Gửi</button>
+                                        </form>
+                                        <div class="comment-list">
+                                            {% if comments %}
+                                                {% for comment in comments %}
+                                                <hr>
+                                                <span class="date pull-right">{{comment.ThoiGian}}</span>
+                                                <input class="answered-rating-input" name="rating" type="text" title="" value="{{comment.rate}}" readonly />
+                                                <span class="by">{{comment.TenKH}}</span>
+                                                <p>{{comment.ChiTiet}}</p>
+                                                {% endfor %}
+                                            <div id="more">
+                                                {% if still %}
+                                                    <button id="more-comment">Xem thêm</button>
+                                                {% else %}
+                                                    <p>Chưa có bình luận nào</p>
+                                                {% endif %}
+                                            </div>  
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row product-related equal">
+                        <div class="col-md-12">
+                            <h4 class="text-center">Sản phẩm liên quan</h4>
+                            <div class="owl-carousel owl-theme">
+                            {% for related_product in related_products %}
+                                <div class="item thumbnail">
+                                    <div class="product-container">
+                                        <div class="image">
+                                            <img class="img-responsive" src="{% static related_product.image %}" alt="">
+                                        </div>
+                                        <div class="product-meta">
+                                            <h5 class="name">
+                                                <a class="product-name" href="{% url 'mode.item' mode=menu id_product=related_product.product.MaSP %}" title="{{related_product.product.TenSP}}">{{related_product.product.TenSP}}</a>
+                                            </h5>
+                                            <div class="product-item-price">
+                                                <span class="product-item-discount">{{related_product.product.Gia}}₫</span>            
+                                            </div>
+                                        </div>
+                                        <div class="button-product-action clearfix">
+                                            <div class="cart icon">
+                                                <a class="btn btn-outline-inverse buy" product-id="10" href="javascript:void(0)" title="Thêm vào giỏ">
+                                                Thêm vào giỏ <i class="fa fa-shopping-cart"></i>
+                                                </a>
+                                            </div>
+                                            <div class="quickview icon">
+                                                <a class="btn btn-outline-inverse" href="{% url 'mode.item' mode=menu id_product=related_product.product.MaSP %}" title="Xem nhanh">
+                                                Xem chi tiết <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock blockcontent %}
+
+{% block blockjs %}
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            xfbml            : true,
+            version          : 'v4.0'
+        });
+        };
+        
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="{% static '/vendor/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/OwlCarousel2-2.3.4/dist/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/star-rating/js/star-rating.min.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{% static '/vendor/format/number_format.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/script.js' %}"></script>
+{% endblock blockjs %}

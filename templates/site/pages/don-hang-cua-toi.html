@@ -1,0 +1,131 @@
+{% extends 'site/base.html' %}
+{% load static %}
+
+{% block title %}
+    Trang chủ - Mỹ Phẩm Beauty Online
+{% endblock title %}
+
+{% block blockcss %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.jpg' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free-5.11.2-web/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/star-rating/css/star-rating.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock blockcss %}
+
+{% block blockcontent %}
+    <main id="maincontent" class="page-main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-9">
+                        <ol class="breadcrumb">
+                            <li><a href="{% url 'home' %}" target="_self">Trang chủ</a></li>
+                            <li><span>/</span></li>
+                            <li class="active"><span>Tài khoản</span></li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"></div>
+                    <aside class="col-md-3">
+                        <div class="inner-aside">
+                            <div class="category">
+                                <ul>
+                                    <li >
+                                        <a href="{% url 'myaccount.info' %}" title="Thông tin tài khoản" target="_self">Thông tin tài khoản
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'myaccount.address' %}" title="Địa chỉ giao hàng mặc định" target="_self">Địa chỉ giao hàng mặc định
+                                        </a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="{% url 'myaccount.orders' %}" target="_self">Đơn hàng của tôi
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </aside>
+                    <div class="col-md-9 order">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h4 class="home-title">Đơn hàng của tôi</h4>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-md-12">
+                                <!-- Mỗi đơn hàng -->
+
+                                <div class="row">
+                                {% for order in orders %}
+                                    <div class="col-md-12">
+                                        <h5>Đơn hàng <a href="{% url 'myaccount.detailorder' index=order.index id_order=order.MaHD %}">#{{order.index}}</a></h5>
+                                        <span class="date">
+                                            {% comment %} Đặt hàng ngày 02 tháng 12 năm 2019 11:12:48  {% endcomment %}
+                                            {{order.NgayDatHang}}           
+                                        </span>
+                                        <hr>
+                                    {% for order_detail in order.order_details %}
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <img src="{% static order_detail.product.image %}" alt="" class="img-responsive">
+                                            </div>
+                                            <div class="col-md-1">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <a class="product-name" href="{% url 'mode.item' mode='product' id_product=order_detail.product.product.MaSP %}">{{order_detail.product.product.TenSP}}</a>
+                                            </div>
+                                            <div class="col-md-2">
+                                                Số lượng: {{order_detail.amount}}                                   
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                    </div>
+                                {% endfor %}
+                                    
+
+                                        {% comment %} <div class="row">
+                                            <div class="col-md-6">
+                                                Đã giao hàng                                    
+                                            </div>
+                                            <div class="col-md-6">
+                                                Giao hàng ngày 05 tháng 12 năm 2019                                                                             
+                                            </div>
+                                        </div> {% endcomment %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+{% endblock blockcontent %}
+
+{% block blockjs %}
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            xfbml            : true,
+            version          : 'v4.0'
+        });
+        };
+        
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="{% static '/vendor/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/OwlCarousel2-2.3.4/dist/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/star-rating/js/star-rating.min.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{% static '/vendor/format/number_format.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/script.js' %}"></script>
+{% endblock blockjs %}

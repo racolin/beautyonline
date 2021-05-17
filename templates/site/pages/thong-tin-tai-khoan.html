@@ -1,0 +1,115 @@
+{% extends 'site/base.html' %}
+{% load static %}
+
+{% block title %}
+    Trang chủ - Mỹ Phẩm Beauty Online
+{% endblock title %}
+
+{% block blockcss %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.jpg' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free-5.11.2-web/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/star-rating/css/star-rating.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock blockcss %}
+
+{% block blockcontent %}
+    <main id="maincontent" class="page-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-9">
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'home' %}" target="_self">Trang chủ</a></li>
+                        <li><span>/</span></li>
+                        <li class="active"><span>Tài khoản</span></li>
+                    </ol>
+                </div>
+                <div class="clearfix"></div>
+                <aside class="col-md-3">
+                    <div class="inner-aside">
+                        <div class="category">
+                            <ul>
+                                <li class="active">
+                                    <a href="{% url 'myaccount.info' %}" title="Thông tin tài khoản" target="_self">Thông tin tài khoản
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{% url 'myaccount.address' %}" title="Địa chỉ giao hàng mặc định" target="_self">Địa chỉ giao hàng mặc định
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{% url 'myaccount.orders' %}" target="_self">Đơn hàng của tôi
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+                <div class="col-md-9 account">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h4 class="home-title">Thông tin tài khoản</h4>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-6">
+                            <form class="info-account" action="{% url 'myaccount.editinfo' %}" method="POST" role="form">
+                            {% csrf_token %}
+                                    <input type="hidden" value="{{username}}" name="username">
+                                <div class="form-group">
+                                    <input type="text" value="{{name_user}}" class="form-control" name="fullname" placeholder="Họ và tên" required="" oninvalid="this.setCustomValidity('Vui lòng nhập tên của bạn')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <p></p>
+                                <div class="form-group">
+                                    <input type="tel" value="{% if phone != null %}{{phone}}{% endif %}" class="form-control" name="mobile" placeholder="Số điện thoại" required="" pattern="[0][0-9]{9,}" oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại bắt đầu bằng số 0 và ít nhất 9 con số theo sau')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <p class="enter_old_pass">Nhập mật khẩu cũ của tại đây!</p>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="old_password" placeholder="Mật khẩu cũ">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="password" placeholder="Mật khẩu mới" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$" oninvalid="this.setCustomValidity('Vui lòng nhập ít nhất 8 ký tự: số, chữ hoa, chữ thường')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <p class="re_enter_pass">Nhập lại mật khẩu tại đây!</p>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="re-password" placeholder="Nhập lại mật khẩu mới" autocomplete="off" autosave="off" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$" oninvalid="this.setCustomValidity('Vui lòng nhập ít nhất 8 ký tự: số, chữ hoa, chữ thường')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary pull-right" id="editinfo" disabled>Cập nhật</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock blockcontent %}
+
+{% block blockjs %}
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            xfbml            : true,
+            version          : 'v4.0'
+        });
+        };
+        
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="{% static '/vendor/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/OwlCarousel2-2.3.4/dist/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/star-rating/js/star-rating.min.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{% static '/vendor/format/number_format.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/script.js' %}"></script>
+{% endblock blockjs %}

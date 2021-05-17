@@ -1,0 +1,219 @@
+{% extends 'site/base.html' %}
+{% load static %}
+
+{% block desktop %}
+    <ul class="nav navbar-nav navbar-left hidden-sm hidden-xs">
+        <li class="
+        {% if menu == 'home' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'home' %}">Trang chủ</a></li>
+        <li class="
+        {% if menu == 'product' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'product.category' id_category='all' %}">Sản phẩm </a></li>
+        <li class="
+        {% if menu == 'selling' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'product.all' %}">Bán chạy </a></li>
+        <li class="
+        {% if menu == 'sale' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'product.all' %}">Giảm giá </a></li>
+        <li class="
+        {% if menu == 'delivery' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'delivery' %}">Chính sách</a></li>
+        <li class="
+        {% if menu == 'contact' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'contact' %}">Liên hệ</a></li>
+    </ul>
+{% endblock desktop %} 
+
+{% block moblie %}
+    <div class="menu-mb">
+        <a href="javascript:void(0)" class="btn-close" onclick="closeMenuMobile()">×</a>
+        <a class="
+        {% if menu == 'home' %}
+            active
+        {% endif %}
+        " href="{% url 'home' %}">Trang chủ</a>
+        <a class="
+        {% if menu == 'product' %}
+            active
+        {% endif %}
+        " href="{% url 'product.category' id_category='all' %}">Sản phẩm </a>
+        <a class="
+        {% if menu == 'selling' %}
+            active
+        {% endif %}
+        " href="{% url 'product.all' %}">Bán chạy </a>
+        <a class="
+        {% if menu == 'sale' %}
+            active
+        {% endif %}
+        " href="{% url 'product.all' %}">Giảm giá </a>
+        <a class="
+        {% if menu == 'delivery' %}
+            active
+        {% endif %}
+        " href="{% url 'delivery' %}">Chính sách</a>
+        <a class="
+        {% if menu == 'contact' %}
+            active
+        {% endif %}
+        " href="{% url 'contact' %}">Liên hệ</a>
+    </div>
+{% endblock moblie %} 
+
+{% block title %}
+    Trang chủ - Mỹ Phẩm Beauty Online
+{% endblock title %}
+
+{% block blockcss %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.jpg' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free-5.11.2-web/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/star-rating/css/star-rating.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock blockcss %}
+
+{% block blockcontent %}
+    <main id="maincontent" class="page-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'home' %}" target="_self">Trang chủ</a></li>
+                        <li><span>/</span></li>
+                        <li class="active"><span>Chính sách</span></li> 
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Chính sách giao hàng</h3>
+                    <div class="content-page border-page">
+                        <p><b>Phạm vi giao hàng</b></p>
+                        <p><span>Hiện tại cửa hàng của chúng tôi đã hỗ trợ giao hàng trên toàn quốc. Dù bạn có ở bất kỳ nơi đâu trên lãnh thổ Việt Nam, chúng tôi đều có thể gửi hàng trực tiếp đến tận tay của bạn.</span>
+                        </p>
+                        <br>
+                        <p><b>Thời gian giao hàng</b></p>
+                        <ul>
+                            <li><span>Đối với khách hàng ở Hồ Chí Minh, thời gian giao hàng sẽ từ 02 - 03 ngày làm việc.</span><span><br><br></span></li>
+                            <li><span>Đối với khách hàng ở các tỉnh, thành phố còn lại thì thời gian giao hàng dự kiến từ 03 - 07 ngày kể từ lúc bạn lên đơn hàng.</span></li>
+                        </ul>
+                        <p><span>Lưu ý: Thời gian giao hàng được bắt đầu tính sau khi đơn hàng của quý khách được xác nhận thành công bằng cuộc gọi của nhân viên chăm sóc khách hàng của chúng tôi.</span></p>
+
+                        <p><b>Phí giao hàng</b></p>
+                        <ul>
+                            <li><span>Đối với khách hàng ở </span><span> Hồ Chí Minh thì quý khách sẽ chịu phí vận chuyển giao hàng 15,000 đ/đơn hàng (đã bao gồm VAT).</span></li>
+                            <li><span>Còn các khách hàng ở các tỉnh thành còn lại, chúng tôi sẽ dựa vào địa điểm bạn đang sinh sống.</span></li>
+                        </ul>
+                        <p>
+                            <br>
+                        </p>
+                        <p><b>Hủy đơn hàng</b></p>
+                        <ul>
+                            <li><span>Đơn hàng của bạn sẽ bị hủy nếu sau 03 lần nhân viên giao hàng hay nhân viên chăm sóc khách hàng liên lạc với bạn.</span></li>
+                            <li><span>Nếu bạn đã nhận đơn hàng nhưng không đồng ý nhận sản phẩm vì một lý do nào đó, thì bạn sẽ là người trực tiếp thanh toán tiền vận chuyển cho nhân viên giao nhận.</span></li>
+                            <li><span>Nếu đơn hàng của bạn đã được đóng gói và chưa được gửi đi, bạn có quyền được hủy đơn hàng mà không phải chịu bất cứ chi phí phát sinh nào cả.<br></span>
+                            </li>
+                        </ul>
+                        
+                    </div>
+
+                </div>
+            </div>     
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 id="giao-hang">Chính sách đổi trả</h3>
+                    <div class="content-page border-page">
+                        <p><b>Điều kiện đổi trả:</b></p> 
+                        
+                        <p><span>Shop sẽ chấp nhận đổi trả cho các trường hợp sau đây:</span></p>
+                        <ul>
+                            <li><span>Sản phẩm bị hư hỏng do quá trình vận chuyển. Ví dụ: quần áo bị lấm bẩn hoặc ướt, sản phẩm không còn hình dạng giống như ban đầu, …</span></li>
+                            <li><span>Sản phẩm bị hư hỏng trong quá trình sản xuất. Ví dụ: quạt điện không thể điều chỉnh được tốc độ, bếp điện có nhiệt độ bất thường, …</span></li>
+                            <li><span>Sản phẩm không giống như những gì bạn được nghe, thấy và nhìn ở trên website hay từ nhân viên tư vấn. Ví dụ: Bạn đặt mua Iphone X chính hãng nhưng chỉ nhận được một chiếc Iphone X Trung Quốc, …</span></li>
+                        </ul>
+                        <p><span>Nếu như sản phẩm của bạn không nằm trong những mục ở trên, chúng tôi có quyền được từ chối yêu cầu đổi trả của quý khách.</span></p>
+                        <p><b>Thời gian đổi trả:</b></p> 
+                        
+                        <p><span>Thời gian đổi trả cố định trong vòng 07 ngày đối với khách hàng ở khu vực trung tâm Hồ Chí Minh. Còn đối với các khách hàng ở các tỉnh khác, thời gian bảo hành được kéo dài đến 14 ngày kể từ ngày mua hàng.</span></p>
+                        <p><b>Quy định đổi trả:</b></p>
+                        <ul>
+                            <li><span>Cùng mã sản phẩm (chỉ đổi size, đổi màu): Đổi miễn phí</span></li>
+                            <li><span>Khác mã sản phẩm:</span></li>
+                        </ul>
+                        <ul>
+                            <li><span>Nếu sản phẩm mới (sản phẩm muốn đổi) có giá trị &gt; giá trị sản phẩm cũ (dựa theo hóa đơn thanh toán): Khách hàng sẽ bù thêm chi phí để đổi lấy sản phẩm mới theo công thức sau (Giá trị sản phẩm mới) - (Giá trị sản phẩm cũ).</span></li>
+                            <li><span>Nếu sản phẩm mới (sản phẩm muốn đổi) có giá trị &lt; giá trị sản phẩm cũ (dựa theo hóa đơn thanh toán): Khách hàng sẽ được nhận lại tiền thừa theo công thức (Giá trị sản phẩm cũ) - (Giá trị sản phẩm mới).<br><br></span></li>
+                        </ul>
+                        
+                    </div>
+
+                </div>
+            </div>     
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 id="giao-hang">Chính sách thanh toán</h3>
+                    <div class="content-page border-page">
+                        
+                        <p><span>Hiện tại cửa hàng chúng tôi hỗ trợ 02 hình thức thanh toán, giúp bạn chủ động và thuận tiện hơn trong quá trình giao hàng: </span></p>
+                        
+                        <p><b>Thanh toán trực tuyến trên website</b></p>
+                        <p><span>Đối với hình thức này, sau khi bạn đã tạo đơn hàng &nbsp;thành công ở trên website bạn vui lòng chuyển khoản tổng giá trị đơn hàng qua tài khoản sau đây:</span></p>
+                        
+                        <p><span>Thông tin chuyển khoản:</span></p>
+                        <p><span>Tên chủ tài khoản: Nguyễn Văn A</span><span><br></span> <span>Số tài khoản: 12345567890</span><span><br></span> <span>Ngân hàng: Vietcombank</span><span><br></span> <span>Chi nhánh: HCM</span></p>
+                        <p><span> Lưu ý: Khi bạn chuyển khoản, vui lòng nhập tên người mua hàng.</span></p>
+                        <p><span>Sau khi bạn đã thanh toán và chuyển khoản xong, chúng tôi sẽ giao hàng đến cho bạn theo thời gian quy định tại “Chính sách giao hàng” của chúng tôi.</span><span><br><br></span></p>
+                        <p><b>Thanh toán khi nhận hàng (COD - Cash On Delivery)</b></p>
+                        <p><span>Với hình thức thanh toán khi nhận hàng, bạn sẽ chỉ thanh toán khi đơn hàng đến tay của bạn và bạn chỉ cần trả đúng số tiền in trên hóa đơn. Nếu bạn thấy giá trị trên hóa đơn không chính xác, bạn vui lòng liên hệ lại ngay cho chúng tôi qua số Hotline: 0932.538.468</span></p>
+                    </div>
+
+                </div>
+            </div>     
+        </div>
+    </main> 
+{% endblock blockcontent %}
+
+{% block blockjs %}
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            xfbml            : true,
+            version          : 'v4.0'
+        });
+        };
+        
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="{% static '/vendor/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/OwlCarousel2-2.3.4/dist/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/star-rating/js/star-rating.min.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{% static '/vendor/format/number_format.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/script.js' %}"></script>
+{% endblock blockjs %}

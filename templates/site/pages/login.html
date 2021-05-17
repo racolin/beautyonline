@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="{% static 'css/loginKH1.css' %}" rel="stylesheet" type="text/css" media="all"/>
+</head>
+<body>
+	<!--header start here-->
+<div class="header">
+		<div class="header-main">
+		       <h1>Beauty Online</h1><img src="{% static 'images/logo.png' %}">
+			<div class="header-bottom">
+				<div class="header-right w3agile">
+					
+					<div class="header-left-bottom agileinfo">
+					<h2 style="color:red">{{message}}</h2>
+					 <form action="{% url 'myaccount.login' %}" method="POST">
+					 {% csrf_token %}
+						<div class="login">
+							<h2> LOGIN NOW</h2>
+							<br>
+							<div class="enter">
+								<img src="{% static 'images/user.png' %}">
+								<input type="text" name='username' placeholder="Enter username">
+							</div>
+							<br>
+							<div class="enter">
+								<img src="{% static 'images/pass.png' %}">
+								<input type="password" name='password' placeholder="Enter password">
+							</div>
+							<br>
+							<div class="check">
+								<input type="checkbox">
+								Remember me
+							</div>
+							<br>
+							<br>
+							<br>
+							<div class="FPass">
+								<a href="{% url 'forget' %}">
+									Forget Password?
+								</a>
+							</div>
+							<br>
+							</br>
+							<div>
+							<button type="submit"> LOGIN </button>
+							</div>
+							<br>
+							<div>
+								No account yet? 
+								<a href="{% url 'signup' %}">
+									Signup
+								</a>
+							</div>
+						</div>
+					</form>	
+				</div>
+				</div>
+			  
+			</div>
+		</div>
+</div>
+<!--header end here-->
+<div class="copyright">
+	<p>© 2021 Login Form. All rights reserved </p>
+</div>
+<!--footer end here-->
+</body>
+</html>

@@ -1,0 +1,156 @@
+{% extends 'site/base.html' %}
+{% load static %}
+
+{% block title %}
+    Chi tiết đơn hàng - Mỹ Phẩm Beauty Online
+{% endblock title %}
+
+{% block blockcss %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.jpg' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free-5.11.2-web/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/star-rating/css/star-rating.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock blockcss %}
+
+{% block blockcontent %}
+    <main id="maincontent" class="page-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-9">
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'home' %}" target="_self">Trang chủ</a></li>
+                        <li><span>/</span></li>
+                        <li class="active"><span>Tài khoản</span></li>
+                    </ol>
+                </div>
+                <div class="clearfix"></div>
+                <aside class="col-md-3">
+                    <div class="inner-aside">
+                        <div class="category">
+                            <ul>
+                                <li >
+                                    <a href="{% url 'myaccount.info' %}" title="Thông tin tài khoản" target="_self">Thông tin tài khoản
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'myaccount.address' %}" title="Địa chỉ giao hàng mặc định" target="_self">Địa chỉ giao hàng mặc định
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="{% url 'myaccount.orders' %}" target="_self">Đơn hàng của tôi
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+                <div class="col-md-9 order-info">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h4 class="home-title">Đơn hàng #{{index}}</h4>
+                        </div>
+                        <div class="clearfix"></div>
+                        <aside class="col-md-7 cart-checkout">
+                        {% for order_detail in order.order_details %}
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <img class="img-responsive" src="{% static order_detail.product.image %}" alt="{{order_detail.product.product.TenSP}}"> 
+                                </div>
+                                <div class="col-xs-6">
+                                    <a class="product-name" href="{% url 'mode.item' mode='product' id_product=order_detail.product.product.MaSP %}">{{order_detail.product.product.TenSP}}</a>
+                                    <br>
+                                    <span>{{order_detail.amount}}</span> x <span>{{order_detail.product.price_sale}}₫</span>
+                                </div>
+                                <div class="col-xs-3 text-right">
+                                    <span>{{order_detail.total}}₫</span>
+                                </div>
+                            </div>
+                            <hr>
+                        {% endfor %}
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    Tạm tính
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    {{order.orderinfo.ThanhTien}}₫
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    Phí vận chuyển
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    {{order.orderinfo.VanChuyen}}₫
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    Tổng cộng
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    {{order.orderinfo.TongTien}}₫
+                                </div>
+                            </div>
+                        </aside>
+                        <div class="ship-checkout col-md-5">
+                            <h4>Thông tin giao hàng</h4>
+                            <div>
+                                Họ và tên: {{order.orderinfo.TenNgNhan}}                           
+                            </div>
+                            <div>
+                                Số điện thoại: {{order.orderinfo.SDTNgNhan}}                              
+                            </div>
+                            <div>
+                                Tỉnh/Thành Phố: {{order.tinh}}                             
+                            </div>
+                            <div>
+                                Quận/Huyện: {{order.huyen}}                        
+                            </div>
+                            <div>
+                                Xã/Phường: {{order.xa}}                           
+                            </div>
+                            <div>
+                                Địa chỉ: {{order.orderinfo.DiaChiNhan}}                           
+                            </div>
+                            <div>
+                                Phương thức thanh toán: COD                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock blockcontent %}
+
+{% block blockjs %}
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            xfbml            : true,
+            version          : 'v4.0'
+        });
+        };
+        
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="{% static '/vendor/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/OwlCarousel2-2.3.4/dist/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/star-rating/js/star-rating.min.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{% static '/vendor/format/number_format.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/script.js' %}"></script>
+{% endblock blockjs %}

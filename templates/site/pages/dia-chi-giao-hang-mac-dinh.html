@@ -1,0 +1,127 @@
+{% extends 'site/base.html' %}
+{% load static %}
+
+{% block title %}
+    Trang chủ - Mỹ Phẩm Beauty Online
+{% endblock title %}
+
+{% block blockcss %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.jpg' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free-5.11.2-web/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/star-rating/css/star-rating.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock blockcss %}
+
+{% block blockcontent %}
+    <main id="maincontent" class="page-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-9">
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'home' %}" target="_self">Trang chủ</a></li>
+                        <li><span>/</span></li>
+                        <li class="active"><span>Tài khoản</span></li>
+                    </ol>
+                </div>
+                <div class="clearfix"></div>
+                <aside class="col-md-3">
+                    <div class="inner-aside">
+                        <div class="category">
+                            <ul>
+                                <li >
+                                    <a href="{% url 'myaccount.info' %}" title="Thông tin tài khoản" target="_self">Thông tin tài khoản
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="{% url 'myaccount.address' %}" title="Địa chỉ giao hàng mặc định" target="_self">Địa chỉ giao hàng mặc định
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{% url 'myaccount.orders' %}" target="_self">Đơn hàng của tôi
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+                <div class="col-md-9 account">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h4 class="home-title">Địa chỉ giao hàng mặc định</h4>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <form action="{% url 'myaccount.editaddress' %}" method="POST" role="form">
+                            {% csrf_token %}
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <input disabled type="text" value="{{name_user}}" class="form-control" >
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <input disabled type="tel" value="{{phone}}" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <select name="province" class="form-control province" required="" oninvalid="this.setCustomValidity('Vui lòng chọn Tỉnh / thành phố')" oninput="this.setCustomValidity('')">
+                                            <option value="">Tỉnh / thành phố</option>
+                                        {% for tinh in Tinhs %}
+                                            <option value="{{tinh.MaTinh}}" {% if tinh.MaTinh == Tinh.MaTinh %}selected{% endif %}>{{tinh.TenTinh}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <select name="district" class="form-control district" required="" oninvalid="this.setCustomValidity('Vui lòng chọn Quận / huyện')" oninput="this.setCustomValidity('')">
+                                            <option value="">Quận / huyện</option>
+                                            <option value="{{Huyen.MaHuyen}}" selected>{{Huyen.TenHuyen}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <select name="ward" class="form-control ward" required="" oninvalid="this.setCustomValidity('Vui lòng chọn Phường / xã')" oninput="this.setCustomValidity('')">
+                                            <option value="">Phường / xã</option>
+                                            <option selected value="{{Xa.MaXa}}">{{Xa.TenXa}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <input type="text" value="{{DiaChi}}" class="form-control" placeholder="Địa chỉ" name="housenumber_street" required="" oninvalid="this.setCustomValidity('Vui lòng nhập địa chỉ bao gồm số nhà, tên đường')" oninput="this.setCustomValidity('')">
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <button type="submit" class="btn btn-primary pull-right">Cập nhật</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock blockcontent %}
+
+{% block blockjs %}
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            xfbml            : true,
+            version          : 'v4.0'
+        });
+        };
+        
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="{% static '/vendor/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/OwlCarousel2-2.3.4/dist/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/star-rating/js/star-rating.min.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{% static '/vendor/format/number_format.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/script.js' %}"></script>
+{% endblock blockjs %}

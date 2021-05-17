@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="{% static 'css/loginKH1.css' %}" rel="stylesheet" type="text/css" media="all"/>
+</head>
+<body>
+	<!--header start here-->
+<div class="header">
+		<div class="header-main">
+		    <h1>Beauty Online</h1><img src="{% static 'images/logo.png' %}">
+			<div class="header-bottom">
+				<div class="header-right w3agile">
+					
+					<div class="header-left-bottom agileinfo">
+						
+					 <form action="{% url 'myaccount.forget' %}" method="POST">
+					 	{% csrf_token %}
+                        <div class="login">
+                        <h2>FORTGOT PASSWORD</h2>
+                        <br>
+                        <div class="enter">
+                            <img src="{% static 'images/user.png' %}">
+                            <input type="text" name="email" placeholder="Enter username">
+                        </div>
+                        <br>
+                        <br>
+                        <div>
+                            <button> Send </button>
+                        </div>
+					</form>	
+				</div>
+				</div>
+			  
+			</div>
+		</div>
+</div>
+<!--header end here-->
+<div class="copyright">
+	<p>© 2021 Login Form. All rights reserved </p>
+</div>
+<!--footer end here-->
+</body>
+</html>

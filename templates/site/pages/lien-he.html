@@ -1,0 +1,163 @@
+{% extends 'site/base.html' %}
+{% load static %}
+
+{% block desktop %}
+    <ul class="nav navbar-nav navbar-left hidden-sm hidden-xs">
+        <li class="
+        {% if menu == 'home' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'home' %}">Trang chủ</a></li>
+        <li class="
+        {% if menu == 'product' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'product.category' id_category='all' %}">Sản phẩm </a></li>
+        <li class="
+        {% if menu == 'selling' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'product.all' %}">Bán chạy </a></li>
+        <li class="
+        {% if menu == 'sale' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'product.all' %}">Giảm giá </a></li>
+        <li class="
+        {% if menu == 'delivery' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'delivery' %}">Chính sách</a></li>
+        <li class="
+        {% if menu == 'contact' %}
+            active
+        {% endif %}
+        " ><a href="{% url 'contact' %}">Liên hệ</a></li>
+    </ul>
+{% endblock desktop %} 
+
+{% block moblie %}
+    <div class="menu-mb">
+        <a href="javascript:void(0)" class="btn-close" onclick="closeMenuMobile()">×</a>
+        <a class="
+        {% if menu == 'home' %}
+            active
+        {% endif %}
+        " href="{% url 'home' %}">Trang chủ</a>
+        <a class="
+        {% if menu == 'product' %}
+            active
+        {% endif %}
+        " href="{% url 'product.category' id_category='all' %}">Sản phẩm </a>
+        <a class="
+        {% if menu == 'selling' %}
+            active
+        {% endif %}
+        " href="{% url 'product.all' %}">Bán chạy </a>
+        <a class="
+        {% if menu == 'sale' %}
+            active
+        {% endif %}
+        " href="{% url 'product.all' %}">Giảm giá </a>
+        <a class="
+        {% if menu == 'delivery' %}
+            active
+        {% endif %}
+        " href="{% url 'delivery' %}">Chính sách</a>
+        <a class="
+        {% if menu == 'contact' %}
+            active
+        {% endif %}
+        " href="{% url 'contact' %}">Liên hệ</a>
+    </div>
+{% endblock moblie %} 
+
+{% block title %}
+    Trang chủ - Mỹ Phẩm Beauty Online
+{% endblock title %}
+
+{% block blockcss %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/logo.jpg' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome-free-5.11.2-web/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/star-rating/css/star-rating.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock blockcss %}
+
+{% block blockcontent %}
+    <!-- CONTAINER -->
+    <main id="maincontent" class="page-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'home' %}" target="_self">Trang chủ</a></li>
+                        <li><span>/</span></li>
+                        <li class="active"><span>Liên hệ</span></li> 
+                    </ol>
+                </div>
+            </div>
+            <div class="row contact">
+                <div class="col-md-6">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15672.242090454325!2d106.7817025!3d10.8830014!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x69ba5a55a3ec0e6f!2zS8O9IHTDumMgeMOhIEtodSBCIMSQ4bqhaSBo4buNYyBRdeG7kWMgZ2lhIFRQLiBIQ00!5e0!3m2!1svi!2s!4v1618738860484!5m2!1svi!2s" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>                    </div>
+                <div class="col-md-6">
+                    <h4>Thông tin liên hệ</h4>
+                        <form class="form-contact" action="{% url 'contact' %}" method="POST">
+                        {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="HoTen"  placeholder="Họ và tên" required oninvalid="this.setCustomValidity('Vui lòng nhập tên của bạn')" oninput="this.setCustomValidity('')">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <input type="email" class="form-control" name="Email" placeholder="Email" required oninvalid="this.setCustomValidity('Vui lòng nhập email')" oninput="this.setCustomValidity('')">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input type="tel" class="form-control" name="SDT" placeholder="Số điện thoại" required pattern="[0][0-9]{9,}"
+                                    oninvalid="this.setCustomValidity('Vui lòng nhập số điện thoại bắt đầu bằng số 0 và ít nhất 9 con số theo sau')" oninput="this.setCustomValidity('')">
+                                </div>
+                                
+                                <div class="form-group col-sm-12">
+                                    
+                                    <textarea class="form-control" placeholder="Nội dung" name="NoiDung" rows="10" required></textarea>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <button type="submit" class="btn btn-sm btn-primary pull-right">Gửi</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>     
+        </div>
+    </main>  
+    <!-- END CONTAINER -->
+{% endblock blockcontent %}
+
+{% block blockjs %}
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            xfbml            : true,
+            version          : 'v4.0'
+        });
+        };
+        
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="{% static '/vendor/jquery.min.js' %}"></script>
+    <script src="{% static '/vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/OwlCarousel2-2.3.4/dist/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/vendor/star-rating/js/star-rating.min.js' %}"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{% static '/vendor/format/number_format.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/script.js' %}"></script>
+{% endblock blockjs %}

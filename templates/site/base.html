@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            {% block title %}{% endblock title %}
+        </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block blockcss %}{% endblock blockcss %}
+    </head>
+    <body>
+        <header>
+            <!-- Top Navbar -->
+            <div class="top-navbar container-fluid">
+                <div class="menu-mb">
+                    <a href="javascript:void(0)" class="btn-close" onclick="closeMenuMobile()">×</a>
+                    <a class="
+                    {% if menu == 'home' %}
+                        active
+                    {% endif %}
+                    " href="{% url 'home' %}">Trang chủ</a>
+                    <a class="
+                    {% if menu == 'product' %}
+                        active
+                    {% endif %}
+                    " href="{% url 'mode.category' mode='product' id_category='all' %}">Sản phẩm </a>
+                    <a class="
+                    {% if menu == 'selling' %}
+                        active
+                    {% endif %}
+                    " href="{% url 'mode.category' mode='selling' id_category='all' %}">Bán chạy </a>
+                    <a class="
+                    {% if menu == 'sale' %}
+                        active
+                    {% endif %}
+                    " href="{% url 'mode.category' mode='sale' id_category='all' %}">Giảm giá </a>
+                    <a class="
+                    {% if menu == 'delivery' %}
+                        active
+                    {% endif %}
+                    " href="{% url 'delivery' %}">Chính sách</a>
+                    <a class="
+                    {% if menu == 'contact' %}
+                        active
+                    {% endif %}
+                    " href="{% url 'contact' %}">Liên hệ</a>
+                </div>
+                <div class="row">
+                    <div class="hidden-lg hidden-md col-sm-2 col-xs-1">
+                        <span class="btn-menu-mb" onclick="openMenuMobile()"><i class="glyphicon glyphicon-menu-hamburger"></i></span>
+                    </div>
+                    <div class="col-md-6 hidden-sm hidden-xs">
+                        <ul class="list-inline">
+                            <li><a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="https://twitter.com"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="https://www.pinterest.com/"><i class="fab fa-pinterest"></i></a></li>
+                            <li><a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 col-sm-10 col-xs-11">
+                        <ul class="list-inline pull-right top-right">
+                                {% if name_user %}
+                                <li class="account-login">
+                                    <a href="{% url 'myaccount.orders' %}" class="btn-logout">Đơn hàng của tôi</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="btn-account dropdown-toggle" data-toggle="dropdown" id="dropdownMenu">{{name_user}}</a>
+                                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
+                                        <li><a href="{% url 'myaccount.info' %}">Thông tin tài khoản</a></li>
+                                        <li><a href="{% url 'myaccount.address' %}">Địa chỉ giao hàng</a></li>
+                                        <li><a href="{% url 'myaccount.orders' %}">Đơn hàng của tôi</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{% url 'myaccount.logout' %}">Thoát</a></li>
+                                    </ul>
+                                </li>
+                                {% else %}
+                                <li class="account-login">
+                                    <a href="{% url 'signup' %}" class="btn-login">{{name_user}}</a>
+                                    <a href="{% url 'signup' %}" class="btn-register">Đăng Ký</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'login' %}" class="btn-login">Đăng Nhập  </a>
+                                </li>
+                                {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- End top navbar -->
+            <!-- Header -->
+            <div class="container">
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 logo">
+                        <a href="#"><img src="{% static '/images/big_logo.png' %}" class="img-responsive"></a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
+                    <!-- HOTLINE AND SERCH -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 hotline-search">
+                        <div>
+                            <p class="hotline-phone"><span><strong>Hotline: </strong><a href="tel:0868.754.872">0868.754.872</a></span></p>
+                            <p class="hotline-email"><span><strong>Email: </strong><a href="mailto:beautyonline191101@gmail.com">beautyonline191101@gmail.com</a></span></p>
+                        </div>
+                        <form class="header-form" action="">
+                            <div class="input-group">
+                                <input type="search" class="form-control search" placeholder="Nhập từ khóa tìm kiếm" name="search" autocomplete="off" value="">
+                                <div class="input-group-btn">
+                                    <button class="btn bt-search bg-color" type="submit"><i class="fa fa-search" style="color:#fff"></i>
+                                    </button>
+                                </div>
+                                <input type="hidden" name="c" value="product">
+                                <input type="hidden" name="a" value="list">
+                            </div>
+                            <div class="search-result">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End header -->
+        </header>
+        <!-- NAVBAR DESKTOP-->
+        <nav class="navbar navbar-default desktop-menu">
+            <div class="container">
+                <ul class="nav navbar-nav navbar-left hidden-sm hidden-xs">
+                    <li class="
+                    {% if menu == 'home' %}
+                        active
+                    {% endif %}
+                    " ><a href="{% url 'home' %}">Trang chủ</a></li>
+                    <li class="
+                    {% if menu == 'product' %}
+                        active
+                    {% endif %}
+                    " ><a href="{% url 'mode.category' mode='product' id_category='all' %}">Sản phẩm </a></li>
+                    <li class="
+                    {% if menu == 'selling' %}
+                        active
+                    {% endif %}
+                    " ><a href="{% url 'mode.category' mode='selling' id_category='all' %}">Bán chạy </a></li>
+                    <li class="
+                    {% if menu == 'sale' %}
+                        active
+                    {% endif %}
+                    " ><a href="{% url 'mode.category' mode='sale' id_category='all' %}">Giảm giá </a></li>
+                    <li class="
+                    {% if menu == 'delivery' %}
+                        active
+                    {% endif %}
+                    " ><a href="{% url 'delivery' %}">Chính sách</a></li>
+                    <li class="
+                    {% if menu == 'contact' %}
+                        active
+                    {% endif %}
+                    " ><a href="{% url 'contact' %}">Liên hệ</a></li>
+                </ul>
+                <span class="hidden-lg hidden-md experience">Trải nghiệm cùng sản phẩm của Beauty Online</span>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="cart"><a href="javascript:void(0)" class="btn-cart-detail" title="Giỏ Hàng"><i class="fa fa-shopping-cart"></i> <span class="number-total-product">{{amount}}</span></a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        {% block blockcontent %}{% endblock blockcontent %}
+        <!-- CART DIALOG -->
+        <div class="modal fade" id="modal-cart-detail" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-color">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <h3 class="modal-title text-center">Giỏ hàng</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="page-content">
+                            <div class="clearfix hidden-sm hidden-xs">
+                                <div class="col-xs-1">
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="header">
+                                        Sản phẩm
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="header">
+                                        Đơn giá
+                                    </div>
+                                </div>
+                                <div class="label_item col-xs-3">
+                                    <div class="header">
+                                        Số lượng
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="header">
+                                        Thành tiền
+                                    </div>
+                                </div>
+                                <div class="lcol-xs-1">
+                                </div>
+                            </div>
+                            <div class="cart-product">
+                            {% for cart in carts %}
+                                <hr>
+                                <div class="clearfix text-left">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-1">
+                                            <div><img class="img-responsive" src="{% static cart.image %}" alt="{{cart.product.TenSP}}"></div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-3"><a class="product-name" href="{% url 'mode.item' mode='product' id_product=cart.product.MaSP %}">{{cart.product.TenSP}}</a></div>
+                                        <div class="col-sm-6 col-md-2"><span class="product-item-discount">{{cart.price_sale}}₫</span></div>
+                                        <div class="col-sm-6 col-md-3"><input type="number" onchange="updateProductInCart(this,'{{cart.product.MaSP}}')" min="1" value="{{cart.amount}}"></div>
+                                        <div class="col-sm-6 col-md-2 total{{cart.product.MaSP}}"><span>{{cart.total}}₫</span></div>
+                                        <div class="col-sm-6 col-md-1"><a class="remove-product" href="javascript:void(0)" onclick="deleteProductInCart(this,'{{cart.product.MaSP}}')"><span class="glyphicon glyphicon-trash"></span></a></div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="clearfix">
+                            <div class="col-xs-12 text-right">
+                                <p>
+                                    <span>Tổng tiền</span>
+                                    <span class="price-total">{{total}}₫</span>
+                                </p>
+                                <input type="button" name="back-shopping" class="btn btn-default" value="Tiếp tục mua sắm">
+                                <input type="button" name="checkout" class="btn btn-primary" value="Đặt hàng" urls="{% url 'order' %}"
+                                {% if amount == 0 %}
+                                    disabled
+                                {% endif %}
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END CART DIALOG -->
+        <!-- BACK TO TOP -->
+        <div class="back-to-top" class="bg-color">▲</div>
+        <!-- END BACK TO TOP -->
+        <!-- Facebook Messenger Chat -->
+        <!-- Load Facebook SDK for JavaScript -->
+        <div id="fb-root"></div>
+        <!-- Your customer chat code -->
+        <div class="fb-customerchat"
+            attribution=setup_tool
+            page_id="112296576811987"
+            logged_in_greeting="Chào bạn, bạn muốn mua sản phẩm nào bên BeautyOnline.com"
+            logged_out_greeting="Chào bạn, bạn muốn mua sản phẩm nào bên BeautyOnline.com">
+        </div>
+        <!-- End Facebook Messenger Chat -->
+        {% block blockjs %}{% endblock blockjs %}
+    </body>
+</html>

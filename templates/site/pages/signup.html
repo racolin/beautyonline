@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/register1.css' %}" media="all">
+</head>
+<body>
+<div class="header">
+		<div class="header-main">
+		       <img src="{% static 'images/logo2.png' %}"><h1>Beauty Online</h1><img src="{% static 'images/logo3.png' %}">
+			<div class="header-bottom">
+				<div class="header-right w3agile">
+					
+					<div class="header-left-bottom agileinfo">
+						
+					 <form action="{% url 'myaccount.signup' %}" method="POST">
+						{% csrf_token %}
+						<div class="register">
+							<h2> Welcome to</h2><img src="{% static 'images/logo.png' %}">
+							<br>
+							<div class="enter">
+								<img src="{% static 'images/name.png' %}">
+								<input type="text" name="name" placeholder="Enter name">
+							</div>
+							<div class="enter">
+								<img src="{% static 'images/email.png' %}">
+								<input type="text" name="email" placeholder="Enter email">
+							</div>
+							<div class="enter">
+								<img src="{% static 'images/user.png' %}">
+								<input type="text" name="username" placeholder="Enter username">
+							</div>
+							<div class="enter">
+								<img src="{% static 'images/pass.png' %}">
+								<input type="password" name="password" placeholder="Enter password"pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$" 
+								oninvalid="this.setCustomValidity('Vui lòng nhập ít nhất 8 ký tự: số, chữ hoa, chữ thường')" oninput="this.setCustomValidity('')">
+							</div>
+							<div class="enter">
+								<img src="{% static 'images/confirmpass.png' %}">
+								<input type="password" placeholder="Enter confirm password">
+							</div>
+							<br>
+							<div class="submit">
+								<button type="submit">REGISTER</button>
+							</div>
+						</div>
+					</form>	
+				</div>
+				</div>
+			  
+			</div>
+		</div>
+</div>
+<!--header end here-->
+<div class="copyright">
+	<p>© 2021 Login Form. All rights reserved </p>
+</div>
+<!--footer end here-->
