@@ -2,6 +2,12 @@ visual studio code
 python: >3.9.3, nếu bé hơn làm ơn unstall bản cũ và tải lại bản mới
 django 3.2.0
 editor: VSC
+
+mở VSC, bấm vào Bên trái có button màu xanh chọn open repository xong thả link git vào
+
+sau đó chọn phiên bản python cho đúng
+
+sau đó:
 thực hiện lần lượt các bước
 1. vào mysql tạo database với <db_name>
 2. vào project mở file beautyshop->settings.py->dòng 84 đến 86 sửa theo máy của mình và <db_name> vừa tạo, hoặc cấu hình theo vậy luôn cho đồng bộ. dòng 145, 146 là email của shop để gửi mail cho các tài khoản
