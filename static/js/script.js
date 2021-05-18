@@ -141,6 +141,7 @@ const amountcomment = 5;
 const amountproduct = 4;
 var checkEmail = false;
 var checkoldpass = false;
+var over = false
 function updateProductInCart(el, id) {
     amount = el.value;
     // console.log(id + ':' + amount);
@@ -280,6 +281,24 @@ $(document).ready(function() {
         }
     });
 
+    $('input[name=search').blur(function() {
+        if (!over) {
+            $('.search-result').hide();
+        }
+    });
+
+    $('input[name=search').focus(function() {
+
+        $('.search-result').show();
+    });
+
+    $('.search-result').mouseenter(function() {
+        over = true
+    })
+
+    $('.search-result').mouseleave(function() {
+        over = false
+    })
 
     $('#input-3').rating({ displayOnly: true, step: 0.5 });
     $("#sort-select").val($('#sortSelected').val());

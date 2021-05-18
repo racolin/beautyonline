@@ -14,25 +14,37 @@ from core.support import displayCart
 from datetime import datetime
 # Create your views here.
 
+# Class lấy thông tin tài khoản của user
+# username lưu ở session
+# Lấy username từ session ra
+# nếu có lưu thì nghĩa là người đó đã đăng nhập và chuyển người đó đến trang thông tin(2)
+# nếu không có thì chuyển về trang đăng nhập(1)
 class MyAccount(View):
     def get(self, request):
-        username = get_username(request)
-        if username == "":
-            return redirect('login')
+        username = get_username(request) 
+        if username == "": 
+            return redirect('login') #(1)
+        
         phone = KhachHang.objects.filter(MaKH__exact=username).first().SDT
-        phone = phone or ""
+        phone = phone or "" 
+
         content = {'name_user': get_name(request), 'username': username, 'phone': phone}
+
         carts, total = displayCart(request.session.get('carts', ""))
         content['carts'] = carts
         content['total'] = convertCurrency(total)
         content['amount'] = len(request.session.get('carts', []))
-        return render(request, 'site/pages/thong-tin-tai-khoan.html', content)
 
+        return render(request, 'site/pages/thong-tin-tai-khoan.html', content) #(2)
+
+# Lấy thông tin về các hoá đơn mà tài khoản đã đặt
+# nếu chưa đăng nhập thì chuyển về trang login(1)
+# nếu đã đăng nhập thì chuyển tới trang đơn hàng yêu cầu(2)
 class MyOrders(View):
     def get(self, request):
         username = get_username(request)
         if username == "":
-            return redirect('login')
+            return redirect('login') #(1)
         phone = KhachHang.objects.filter(MaKH__exact=username).first().SDT
         phone = phone or ""
         content = {'name_user': get_name(request), 'username': username, 'phone': phone}
@@ -43,19 +55,26 @@ class MyOrders(View):
             list_orders_detail.append({'MaHD': order['MaHD'], 'index': i, 'NgayDatHang': order['NgayDatHang'], 'order_details': get_Detail_Order(order['MaHD'])})
             i -= 1
         content['orders'] = list_orders_detail
+
         carts, total = displayCart(request.session.get('carts', ""))
         content['carts'] = carts
         content['total'] = convertCurrency(total)
         content['amount'] = len(request.session.get('carts', []))
-        return render(request, 'site/pages/don-hang-cua-toi.html', content)
 
+        return render(request, 'site/pages/don-hang-cua-toi.html', content) #(2)
+
+# Lấy thông tin địa chỉ của người dùng
+# nếu chưa đăng nhập thì chuyển về trang login(1)
+# nếu đã đăng nhập thì chuyển tới trang yêu cầu(2)
 class MyAddress(View):
     def get(self, request):
         username = get_username(request)
         if username == "":
-            return redirect('login')
+            return redirect('login') #(1)
+
         phone = KhachHang.objects.filter(MaKH__exact=username).first().SDT
         phone = phone or ""
+
         content = {'name_user': get_name(request), 'username': username, 'phone': phone}
         khachhang = KhachHang.objects.filter(MaKH__exact=username).first()
         xa = khachhang.MaXa
@@ -69,12 +88,20 @@ class MyAddress(View):
             content['Huyen'] = huyen
             content['Tinh'] = tinh
             content['DiaChi'] = diachi
+
         carts, total = displayCart(request.session.get('carts', ""))
         content['carts'] = carts
         content['total'] = convertCurrency(total)
         content['amount'] = len(request.session.get('carts', []))
-        return render(request, 'site/pages/dia-chi-giao-hang-mac-dinh.html', content)
 
+        return render(request, 'site/pages/dia-chi-giao-hang-mac-dinh.html', content) #(2)
+
+# dùng Ajax lấy thêm comment
+# Ajax gửi lên số comment hiện tại(current_comment), và sản phẩm cần xem thêm(id_product)
+# trả về cho nó 3 biến là 
+# current_comment: số comment hiện tại khi lấy thêm
+# still để xem có còn comment hay không
+# comments: chứa thông tin về các comments để show
 @csrf_exempt
 def getMoreComment(request):
     current_comment = request.POST.get('current_comment', '0')
@@ -83,11 +110,16 @@ def getMoreComment(request):
     content['current_comment'], content['still'], content['comments'] = getCommemt(id_product, int(current_comment))
     return JsonResponse(content)
 
+# Hàm thêm comment sử dụng khi người dùng gửi comment về sản phẩm lên
+# input mode(product, selling hoặc sale), MaSP, rating: đánh gía sao, và description: comment
+# thực hiện lưu comment xong load lại trang đó => comment được load lên (2) 
 def addComment(request):
+    # input
     mode = request.POST.get("mode", "")
     MaSP = request.POST.get("MaSP", "")
     rate = request.POST.get("rating", "")
     description = request.POST.get("description", "")
+
     thoigian = datetime.now()
     username = get_username(request)
     if username == "":
@@ -100,12 +132,17 @@ def addComment(request):
     cm.MaKH = kh
     cm.ThoiGian = thoigian
     cm.ChiTietCM = description
-    cm.save()
-    return redirect('mode.item', mode=mode, id_product=MaSP)
+    cm.save() #(2)
+    return redirect('mode.item', mode=mode, id_product=MaSP) #(2)
 
+
+# sử dụng transaction để thực hiện đặt hàng
+# nếu có 1 truy vấn không thành công thì phải hoàn lại thao tác
+# input là thông tin của người nhận hàng và carts đã được lưu trong session
+#
 @transaction.atomic
 def getOrder(request):
-
+    #input
     MaXa = request.POST.get("ward", "")
     DiaChi = request.POST.get("address", "")
     SDTNgNhan = request.POST.get('mobile', "")
@@ -150,7 +187,11 @@ def getOrder(request):
     del request.session['carts']
     return redirect('myaccount.detailorder', id_order=id_order, index=index)
     
-
+# đăng kí
+# input name, email, username, password
+# nếu username tồn tại thì chuyển lại trang đăng kí
+# nếu chưa có thì tạo tài khoản chó người dùng và chuyển hướng đến trang thông tin tài khoản cho người dùng cấp nhập thông tin
+# tạo tài khoản nếu được và cho nó về 
 def Signup(request):
     name = request.POST['name']
     email = request.POST['email']
@@ -172,6 +213,8 @@ def Signup(request):
         request.session['username'] = username
         return redirect('myaccount.address')
     
+# lấy thông tin cập nhập của người dùng chỉnh sửa
+# sau đó cập nhật phía database
 def EditInfo(request):
     old_password = request.POST.get('old_password', "")
     password = request.POST.get('password', "")
@@ -191,6 +234,8 @@ def EditInfo(request):
         request.session['name'] = name
     return redirect('myaccount.info')
 
+# lấy thông tin cập nhập của người dùng về địa chỉ chỉnh sửa
+# sau đó cập nhật phía database
 def EditAddress(request):
     ward = request.POST.get('ward', "")
     housenumber_street = request.POST.get('housenumber_street', "")
@@ -206,6 +251,10 @@ def EditAddress(request):
         khachhang.save()
     return redirect('myaccount.address')
 
+# login lấy vào username và pass
+# so khớp phía database 
+# nếu trùng thì cho người dùng đăng nhập và chuyển về trang chủ
+# nếu sai thì gửi message cho biết sai
 def Login(request):
     username = request.POST['username']
     password = request.POST['password']
@@ -216,6 +265,8 @@ def Login(request):
         return redirect('home')
     return render(request, 'site/pages/login.html', {'message':'Tài khoản hoặc mật khẩu không đúng!'})
     
+# Chi tiết về 1 đơn hàng nào đó
+# input là id_order
 def DetailOrder(request, *args, **kwargs):
     username = get_username(request)
     if username == "":
@@ -241,7 +292,9 @@ def DetailOrder(request, *args, **kwargs):
     content['total'] = convertCurrency(total)
     content['amount'] = len(request.session.get('carts', []))
     return render(request, 'site/pages/chi-tiet-don-hang.html', content)
-    
+
+#hàm bổ trợ
+# chuyển hoá đơn sang dạng dict
 def convertHoaDonToObject(hoadon: HoaDon):
     hd = {}
     hd['NgayDatHang'] = hoadon.NgayDatHang
@@ -255,6 +308,8 @@ def convertHoaDonToObject(hoadon: HoaDon):
     hd['VanChuyen'] = convertCurrency(hd['VanChuyen'])
     return hd
 
+#hàm bổ trợ
+# lấy chi tiết hoá đơn, input là mã hoá đơn
 def get_Detail_Order(MaHD):
     cthds = ChiTietHoaDon.objects.filter(MaHD__MaHD__exact=MaHD)
     order_details = []
@@ -263,6 +318,7 @@ def get_Detail_Order(MaHD):
         order_details.append({'amount': cthd.SoLuong, 'product': product, 'total': convertCurrency(cthd.SoLuong * cthd.GiaBan)})
     return order_details
 
+# người dùng quên mật khẩu thì gửi lại mật khẩu cho người dùng qua mail
 def Forget(request):
     email = request.POST['email']
     khachhang = KhachHang.objects.filter(Email__exact=email).first()
@@ -278,12 +334,18 @@ def Forget(request):
         return redirect('login')
     return redirect('home')
 
+# khi đăng xuất thì xoá name, username khỏi session
 def Logout(request):
     del request.session['name']
+    del request.session['username']
     return redirect('home')
 
+#hàm bổ trợ
+# lấy name từ session
 def get_name(request):
     return request.session.get('name', "")
 
+#hàm bổ trợ
+# lấy username từ session
 def get_username(request):
     return request.session.get('username', "")

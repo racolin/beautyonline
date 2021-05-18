@@ -154,11 +154,11 @@ header form .search-result {
     position: absolute;
     top:45px;
     z-index: 1001;
-    max-height:150px;
+    max-height:500px;
     width:100%;
-    background-color:#fff;
+    /* background-color:#fff; */
+    background-color:rgba(255, 255, 255, 0.9);
     display: none;
-    padding:5px 20px;
     overflow:auto;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -167,8 +167,26 @@ header form .search-result {
     width: 100%;
     text-align: center;
 }
-header form .search-result li {
+
+header form .search-result ul {
+    list-style: none;
+    margin-left: -27px;
+    margin-right: 15px;
+}
+
+header form .search-result ul li {
     padding:5px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+header form .search-result ul li:hover a {
+    color: #49e198;
+}
+
+header form .search-result ul li a {
+    padding:5px 0;
+    width: 100%;
+    color: rgba(37, 37, 37, 0.8);
 }
 
 header form.header-form {

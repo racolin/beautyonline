@@ -48,3 +48,5 @@ class LienHe(models.Model):
 	Email = models.CharField(max_length=50, null=False)
 	SDT = models.CharField(max_length=11, null=False)
 	NoiDung = models.CharField(max_length=500, null=False)
+	class Meta:
+		db_table = 'lienhe'

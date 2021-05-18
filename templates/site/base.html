@@ -114,6 +114,8 @@
                                 <input type="hidden" name="a" value="list">
                             </div>
                             <div class="search-result">
+                                <ul class="search-result-ul">
+                                </ul>
                             </div>
                         </form>
                     </div>
@@ -254,5 +256,30 @@
         </div>
         <!-- End Facebook Messenger Chat -->
         {% block blockjs %}{% endblock blockjs %}
+        <script type=text/javascript>
+            
+            $('input[name=search').keyup(function() {
+                val = $(this).val()
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "post",
+                    url: "/site/ajax/search",
+                    data: { search: val },
+                    success: function(response) {
+                        var url = "{% url 'mode.item' mode='product' id_product='id_product' %}"
+                        result = response.result
+                        $('.search-result-ul').empty()
+                        result.forEach(product => {
+                            ten = product.TenSP.replace(val, '<span style="color:red">' + val + '</span>') 
+                            $('.search-result-ul').prepend('<li><a href="'+url.replace('id_product', product.MaSP)+'">'+ten+'</a></li>')
+                        })
+                    }
+                });
+            })
+        </script>
     </body>
 </html>

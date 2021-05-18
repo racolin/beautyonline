@@ -1,4 +1,3 @@
-from django.core import paginator
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Comment, SanPham, AnhSanPham, LoaiSanPham, KhoangGia, GiamGia, SapXep
@@ -11,7 +10,9 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 # Create your views here.
 
-# hiển thị cho Item
+# hiển thị cho chi tiết sản phẩm
+# biến content chứa tất cả thông tin về sản phẩm đó
+# sau đó chuyển đến trang chi tiết sản phẩm và đổ dữ liệu ra phía client
 class Item(View):
     def get(self, request, *args, **kwargs):
         id_product = kwargs.get('id_product', "")
@@ -34,6 +35,7 @@ class Item(View):
         return render(request, 'site/pages/chi-tiet-san-pham.html', content)
    
 # Hiển thị cho danh mục
+# lấy list các danh mục và show nó ra
 class Category(View):
     def get(self, request, *args, **kwargs):
         mode = kwargs.get('mode', "")
@@ -188,7 +190,7 @@ def get_all_types():
         types.append({'MaLSP': l[0], 'TenLSP': l[1]})
     return types
 
-# lấy khoảng giá 
+# lấy khoảng giá để show phía client
 def get_price_range():
     price_range = []
     r_rs = KhoangGia.objects.values_list('MaKG', 'Gia_Min', 'Gia_Max')
@@ -204,6 +206,7 @@ def get_price_range():
     return price_range
 
 # lấy các sản phẩm liên quan đến 1 product
+# sản phẩm kiên quan gồm giá nằm cùng khoảng với sản phẩm chỉ định, cùng thương hiệu, hoặc cùng loại sản phẩm
 def get_ralated_product(product: SanPham):
     price = int("".join(product.Gia.split(',')))
     max_price = price + 50000
@@ -234,6 +237,8 @@ def get_name(request):
 def get_all_sort():
     return SapXep.objects.all()
 
+# hàm bổ trợ
+# tính tỉ lệ đánh giá sao trung bình của sản phẩm
 def getRate(id_product):
     comments = Comment.objects.filter(MaSP__MaSP__exact=id_product)
     total = 0
@@ -243,10 +248,11 @@ def getRate(id_product):
         total += comment.Rate
     return total / count if count != 0 else 0
 
-def getCommemt(id_product, fom):
-    comments = Comment.objects.filter(MaSP__MaSP__exact=id_product).order_by('-ThoiGian')[fom:fom+3]
+# hàm bổ trợ, lấy thêm 3 comment kể tử current và lấy thêm 3 cái
+def getCommemt(id_product, current):
+    comments = Comment.objects.filter(MaSP__MaSP__exact=id_product).order_by('-ThoiGian')[current:current+3]
     content = []
     for comment in comments:
         content.append({'TenKH': comment.MaKH.TenKH, 'rate': comment.Rate, 'ThoiGian': comment.ThoiGian, 'ChiTiet': comment.ChiTietCM})
-    return fom + 3, comments.count() == 3, content
+    return current + 3, comments.count() == 3, content
 

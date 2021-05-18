@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import Home, Delivery, Contact, Login, Register, Forget, Order, addCart, deleteCart, checkPassword, getDistricts, getWards
+from .views import Home, Delivery, Contact, Login, Register, Forget, Order, addCart, deleteCart, checkPassword, getDistricts, getWards, getSearch
 
 urlpatterns = [
     path('order', Order.as_view(), name='order'),
@@ -16,4 +16,5 @@ urlpatterns = [
     path('ajax/checkpassword', checkPassword, name='checkpassword'),
     path('ajax/districts', getDistricts, name='getdistricts'),
     path('ajax/wards', getWards, name='getwards'),
+    path('ajax/search', getSearch, name='getsearch'),
 ]

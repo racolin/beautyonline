@@ -13,6 +13,8 @@ from datetime import datetime, timedelta
 
 # Create your views here.
 
+# hàm bổ trợ
+# thêm sản theo tất cả các loại 
 def addCategory():
     types = []
     images = AnhSanPham.objects.filter(LoaiAnh__exact=1).values_list('MaSP', 'NguonAnh')
@@ -34,6 +36,18 @@ def addCategory():
         types.append({'name': product_type.TenLSP, 'products_images': products_images})
     return types
 
+# lấy thông tin searh của khách để tìm sản phẩm phù hợp
+@csrf_exempt
+def getSearch(request):
+    search = request.POST.get('search', "")
+    sps = SanPham.objects.filter(TenSP__icontains=search)[:10]
+    result = []
+    for sp in sps:
+        result.append({'MaSP': sp.MaSP, 'TenSP': sp.TenSP})
+        
+    return JsonResponse({'result': result})
+# chuyển hướng đến trang đặt hàng
+# nếu đã đăng nhập thì chuyển đến trang đặt hàng, nếu không thì chuyển đến trang login   
 class Order(View):
     def get(self, request):
         username = get_username(request)
@@ -61,6 +75,8 @@ class Order(View):
         content['total'] = convertCurrency(total)
         content['amount'] = len(request.session.get('carts', []))
         return render(request, 'site/pages/dat-hang.html', content) 
+
+# chuyển hướng đến trang home
 class Home(View):
     def get(self, request):
         # Thêm các loại sản phẩm
@@ -110,12 +126,14 @@ class Home(View):
         carts, total = displayCart(request.session.get('carts', ""))
         return render(request, 'site/pages/index.html', {'types': types, 'menu': 'home', 'name_user':name, 'carts': carts, 'total': convertCurrency(total), 'amount': len(request.session.get('carts', []))})
 
+# chuyển hướng đến trang chính sách 
 class Delivery(View):
     def get(self, request):
         name = get_name(request)
         carts, total = displayCart(request.session.get('carts', ""))
         return render(request, 'site/pages/chinh-sach.html', {'menu': 'delivery', 'name_user':name, 'carts': carts, 'total': convertCurrency(total), 'amount': len(request.session.get('carts', []))})
 
+# chuyển đến trang liên hệ hoặc lưu thông tin vào database
 def Contact(request):
     if request.method == "POST":
         contact = LienHe()
@@ -130,24 +148,33 @@ def Contact(request):
         carts, total = displayCart(request.session.get('carts', ""))
         return render(request, 'site/pages/lien-he.html', {'menu': 'contact', 'name_user':name, 'carts': carts, 'total': convertCurrency(total), 'amount': len(request.session.get('carts', []))})
 
+# Chuyển hướng đến trang login
 class Login(View):
     def get(self, request):
         return render(request, 'site/pages/login.html')
 
+#Chuyển hướng đến trang đăng kí
 class Register(View):
     def get(self, request):
         return render(request, 'site/pages/signup.html')
 
+#Chuyển hướng đến trang quên mật khẩu
 class Forget(View):
     def get(self, request):
         return render(request, 'site/pages/forget.html')
 
+#hàm bổ trợ 
+# lấy tên người dùng
 def get_name(request):
     return request.session.get('name', "")
 
+#hàm bổ trợ 
+# lấy username
 def get_username(request):
     return request.session.get('username', "")
 
+#hàm bổ trợ 
+# chuyển sản phẩm sang dict
 def convertToObject(sanpham: SanPham):
     sp = {}
     sp['MaSP'] = sanpham.MaSP
@@ -155,12 +182,15 @@ def convertToObject(sanpham: SanPham):
     sp['Gia'] = sanpham.Gia
     return sp
 
+#hàm bổ trợ 
+#tính tổng carts
 def totalCart(carts):
     total = 0
     for cart in carts:
         total += cart['amount'] * cart['price_sale']
     return total
 
+# chuyển đổi carts trong session thành dạng display để show phía client
 def displayCart(carts):
     length = len(carts)
     total = 0
@@ -172,6 +202,7 @@ def displayCart(carts):
         carts[i]['price_sale'] = convertCurrency(carts[i]['price_sale'])
     return carts, total
 
+# ajax lấy huyện từ tỉnh
 @csrf_exempt
 def getDistricts(request):
     province = request.POST.get('province', "")
@@ -181,6 +212,7 @@ def getDistricts(request):
         return JsonResponse({'districts': districts, 'price': price, 'totalAll': totalCart(request.session.get('carts', ""))})
     return JsonResponse({})
 
+# ajax lấy xã từ huyện
 @csrf_exempt
 def getWards(request):
     district = request.POST.get('district', "")
@@ -189,6 +221,7 @@ def getWards(request):
         return JsonResponse({'wards': wards})
     return JsonResponse({})
 
+# ajax thêm sản phẩm khỏi cart
 @csrf_exempt
 def addCart(request):
     id_product = request.POST['MaSP']
@@ -216,6 +249,7 @@ def addCart(request):
 
     return JsonResponse({'product_image': product_image, 'totalAll': totalCart(carts), 'totalProduct': totolProduct, 'amount': amount})
 
+# ajax xoá sản phẩm khỏi cart
 @csrf_exempt
 def deleteCart(request):
     id_product = request.POST['MaSP']
@@ -232,6 +266,7 @@ def deleteCart(request):
 
     return JsonResponse({'amount': amount, 'totalAll': totalCart(carts)})
 
+# ajax kiểm tra mật khẩu
 @csrf_exempt
 def checkPassword(request):
     username = request.session.get('username', "")
