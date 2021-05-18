@@ -19,6 +19,7 @@ def addCategory():
     types = []
     images = AnhSanPham.objects.filter(LoaiAnh__exact=1).values_list('MaSP', 'NguonAnh')
     product_types = LoaiSanPham.objects.all()
+    temp = 'dsdsa'
     for product_type in product_types:
         products = SanPham.objects.filter(MaLSP__TenLSP__exact=product_type.TenLSP)
         products_images = []
