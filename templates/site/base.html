@@ -8,6 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block blockcss %}{% endblock blockcss %}
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     </head>
     <body>
         <header>
@@ -254,6 +255,78 @@
             logged_in_greeting="Chào bạn, bạn muốn mua sản phẩm nào bên BeautyOnline.com"
             logged_out_greeting="Chào bạn, bạn muốn mua sản phẩm nào bên BeautyOnline.com">
         </div>
+        <section id="footer">
+        <div class="container">
+            <div class="row text-center text-xs-center text-sm-left text-md-left">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <h5>CHĂM SÓC KHÁCH HÀNG </h5>
+                    <ul class="list-unstyled quick-links">
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Trung Tâm Trợ Giúp </a></li>
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Hướng Dẫn Mua Hàng</a></li>
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Hướng Dẫn Tạo Tài Khoản</a></li>
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Hướng Dẫn Đăng Nhập</a></li>
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Vận Chuyển</a></li>
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Hoàn Tiền & Đổi Trả</a></li>
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Thanh Toán</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <h5>DANH MỤC</h5>
+                    <ul class="list-unstyled quick-links">
+                        <li><a href="{% url 'home' %}"><i class="fa fa-angle-double-right"></i>Trang chủ</a></li>
+                        <li><a href="{% url 'mode.category' mode='product' id_category='all' %}"><i class="fa fa-angle-double-right"></i>Sản phẩm </a></li>
+                        <li><a href="{% url 'mode.category' mode='selling' id_category='all' %}"><i class="fa fa-angle-double-right"></i>Bán chạy </a></li>
+                        <li><a href="{% url 'mode.category' mode='sale' id_category='all' %}"><i class="fa fa-angle-double-right"></i>Giảm giá </a></li>
+                        <li><a href="{% url 'delivery' %}"><i class="fa fa-angle-double-right"></i>Chính sách</a></li>
+                        <li><a href="{% url 'contact' %}"><i class="fa fa-angle-double-right"></i>Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <h5>NHÀ TÀI TRỢ
+                    </h5>
+                    <ul class="list-unstyled quick-links">
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Công ty trách nhiệm hữu hạn ABC </a></li>
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Công ty trách nhiệm hữu hạn CBA</a></li>
+                        <li><a href=""><i class="fa fa-angle-double-right"></i>Công ty trách nhiệm hữu hạn XYZ</a></li>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href=""><i class="fa fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href=""><i class="fa fa-instagram"></i></a></li>
+
+
+                    </ul>
+                </div>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                    <p><u><a href=""></a></u> Công Ty Beauty Online : số 1 Võ Văn Ngân,Thành phố Thủ Đức, Thành phố Hồ
+                        Chí Minh </p>
+                    <p class="tongdai">Tổng đài hỗ trợ: 19001001 - Email: beautyonline191101@gmail.com
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        </div>
+    </section>
+    <footer>
+        <div class="banquyen">
+            <div>© 2021 - Bản quyền của Công Ty Cổ Phần Beauty Online - Beautyonline.vn
+                <br>
+       
+                Giấy chứng nhận Đăng ký Kinh doanh số 0309532902 do Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh cấp
+                ngày 01/01/2011
+
+                <img class="copyright-img" src="{% static 'images/bocongthuong.jpg' %}" alt="">
+            </div>
+
+        </div>
+
+    </footer>
         <!-- End Facebook Messenger Chat -->
         {% block blockjs %}{% endblock blockjs %}
         <script type=text/javascript>
