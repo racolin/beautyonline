@@ -1,6 +1,6 @@
 visual studio code
-python: 3.9.3
-django 3.2
+python: >3.9.3, nếu bé hơn làm ơn unstall bản cũ và tải lại bản mới
+django 3.2.0
 thực hiện lần lượt các bước
 1. vào mysql tạo database với <db_name>
 2. vào project mở file beautyshop->settings.py->dòng 84 đến 86 sửa theo máy của mình và <db_name> vừa tạo, hoặc cấu hình theo vậy luôn cho đồng bộ. dòng 145, 146 là email của shop để gửi mail cho các tài khoản
