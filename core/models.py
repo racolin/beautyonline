@@ -29,6 +29,8 @@ class Xa(models.Model):
 	MaHuyen = models.ForeignKey(Huyen, on_delete=models.CASCADE, null=False)
 	class Meta:
 		db_table = 'XA'
+	def __str__(self) -> str:
+	    return self.TenXa
 
 class KhachHang(models.Model):
 	MaKH = models.CharField(primary_key=True, max_length=20)
@@ -39,8 +41,12 @@ class KhachHang(models.Model):
 	SDT= models.CharField(max_length=11, null=True)
 	Login = models.CharField(max_length=20, null=False)
 	Email = models.CharField(max_length=50, null=False)
+	SignDate = models.DateTimeField(null=True)
 	class Meta:
 		db_table = 'KHACHHANG'
+	def __str__(self) -> str:
+	    return self.TenKH
+	
 
 class LienHe(models.Model):
 	MaLH = models.AutoField(primary_key=True)

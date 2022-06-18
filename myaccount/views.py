@@ -46,13 +46,12 @@ class MyOrders(View):
         if username == "":
             return redirect('login') #(1)
         phone = KhachHang.objects.filter(MaKH__exact=username).first().SDT
-        phone = phone or ""
         content = {'name_user': get_name(request), 'username': username, 'phone': phone}
-        orders = HoaDon.objects.filter(MaKH__MaKH__exact=username).values('MaHD', 'NgayDatHang')
+        orders = HoaDon.objects.filter(MaKH__MaKH__exact=username).values('MaHD', 'NgayDatHang', 'TrangThai')
         list_orders_detail = []
         i = len(orders)
         for order in reversed(orders):
-            list_orders_detail.append({'MaHD': order['MaHD'], 'index': i, 'NgayDatHang': order['NgayDatHang'], 'order_details': get_Detail_Order(order['MaHD'])})
+            list_orders_detail.append({'MaHD': order['MaHD'], 'index': i, 'TrangThai': order['TrangThai'], 'NgayDatHang': order['NgayDatHang'], 'order_details': get_Detail_Order(order['MaHD'])})
             i -= 1
         content['orders'] = list_orders_detail
 
@@ -147,10 +146,11 @@ def getOrder(request):
     DiaChi = request.POST.get("address", "")
     SDTNgNhan = request.POST.get('mobile', "")
     TenNgNhan = request.POST.get('fullname', '')
-    
+
     username = get_username(request)
     index = HoaDon.objects.all().count() + 1
     id_order = "HD" + str(index).zfill(5)
+    # TrangThai = HoaDon.TrangThai
 
     carts, total = displayCart(request.session.get('carts', ""))
     total = 0
@@ -169,6 +169,7 @@ def getOrder(request):
     order.SDTNgNhan = SDTNgNhan
     order.TenNgNhan = TenNgNhan
     order.VanChuyen = Xa.objects.filter(MaXa__exact=MaXa).first().MaHuyen.MaTinh.MaKV.Gia
+    order.TrangThai = "Đang chờ"
 
     order.save()
 
@@ -276,6 +277,7 @@ def DetailOrder(request, *args, **kwargs):
     content = {'name_user': get_name(request), 'username': username, 'phone': phone}
     id_order = kwargs.get("id_order", "")
     index = kwargs.get("index", "")
+    trangthai = 'Đang đợi'
     order = {}
     if index != "" and id_order != "":
         hoadon = HoaDon.objects.filter(MaHD__exact=id_order).first()
@@ -291,6 +293,7 @@ def DetailOrder(request, *args, **kwargs):
     content['index'] = index
     content['total'] = convertCurrency(total)
     content['amount'] = len(request.session.get('carts', []))
+    content['trangthai'] = trangthai
     return render(request, 'site/pages/chi-tiet-don-hang.html', content)
 
 #hàm bổ trợ
@@ -303,6 +306,7 @@ def convertHoaDonToObject(hoadon: HoaDon):
     hd['TenNgNhan'] = hoadon.TenNgNhan
     hd['SDTNgNhan'] = hoadon.SDTNgNhan
     hd['DiaChiNhan'] = hoadon.DiaChiNhan
+    hd['TrangThai'] = hoadon.TrangThai
     hd['TongTien'] = convertCurrency(hd['ThanhTien'] + hd['VanChuyen'])
     hd['ThanhTien'] = convertCurrency(hd['ThanhTien'])
     hd['VanChuyen'] = convertCurrency(hd['VanChuyen'])

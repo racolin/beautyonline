@@ -60,6 +60,7 @@
                                 {% for order in orders %}
                                     <div class="col-md-12">
                                         <h5>Đơn hàng <a href="{% url 'myaccount.detailorder' index=order.index id_order=order.MaHD %}">#{{order.index}}</a></h5>
+                                        </p>Trạng thái: {{order.TrangThai}}</p>
                                         <span class="date">
                                             {% comment %} Đặt hàng ngày 02 tháng 12 năm 2019 11:12:48  {% endcomment %}
                                             {{order.NgayDatHang}}           

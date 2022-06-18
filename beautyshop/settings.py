@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
+    'admin_tools_stats',  # this must be BEFORE 'admin_tools' and 'django.contrib.admin'
+    'django_nvd3',
+    'djangobower',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'register',
         'USER': 'root',
-        'PASSWORD': '20789301105',
+        'PASSWORD': '123456',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -127,6 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static_admin'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -144,3 +149,38 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'beautyonline191101@gmail.com'
 EMAIL_HOST_PASSWORD = '20789301105'
+
+
+
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "BeautyOnline",
+
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "BeautyOnline",
+
+    # Tiêu đề trang
+    "site_brand": "BeautyOnline",
+    
+    #Copyright 
+    "copyright": "BeautyOnline",
+
+    #Login Logo
+    "login_logo": "https://thegioibienquangcao.com/wp-content/uploads/2018/10/logo-my-pham-3.jpg",
+
+    #Welcom sign
+    "welcome_sign": "Welcome to BeautyOnline",
+
+    "site_logo": "images/logo.png",
+
+    "login_logo": "images/logo.png",
+
+
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}

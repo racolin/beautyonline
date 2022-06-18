@@ -50,8 +50,11 @@
                 <div class="col-md-9 order-info">
                     <div class="row">
                         <div class="col-xs-6">
-                            <h4 class="home-title">Đơn hàng #{{index}}</h4>
+                            <p >Đơn hàng #{{index}}</p>
                         </div>
+                        {% comment %} <div class="col-xs-6">
+                            <h5 class="home-title">Trạng thái: {{trangthai}}</h5>
+                        </div> {% endcomment %}
                         <div class="clearfix"></div>
                         <aside class="col-md-7 cart-checkout">
                         {% for order_detail in order.order_details %}

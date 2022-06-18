@@ -15,6 +15,7 @@ class HoaDon(models.Model):
 	SDTNgNhan = models.CharField(max_length=11, null=False)
 	DiaChiNhan = models.CharField(max_length=100, null=False)
 	VanChuyen = models.BigIntegerField(null=False)
+	TrangThai = models.CharField(max_length=20, null=True)
 	class Meta:
 		db_table = 'HOADON'
 

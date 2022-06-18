@@ -7,6 +7,9 @@ from core.models import KhachHang
 class LoaiSanPham(models.Model):
 	MaLSP = models.CharField(primary_key=True, max_length=20)
 	TenLSP = models.CharField(max_length=100, null=False)
+	
+	def __str__(self) -> str:
+		return self.TenLSP
 	class Meta:
 		db_table = 'LOAISANPHAM'
 
@@ -15,8 +18,12 @@ class ThuongHieu(models.Model):
 	TenTH = models.CharField(max_length=20, null=False)
 	XuatXu = models.CharField(max_length=100, null=False)
 	MoTa = models.CharField(max_length=2000, null=False)
+
+	def __str__(self) -> str:
+		return self.TenTH
 	class Meta:
 		db_table = 'THUONGHIEU'
+
 
 class SanPham(models.Model):
 	MaSP = models.CharField(primary_key=True, max_length=20)
@@ -30,6 +37,10 @@ class SanPham(models.Model):
 	SoLuong = models.IntegerField(null=False)
 	class Meta:
 		db_table = 'SANPHAM'
+	def __str__(self) -> str:
+	    return self.TenSP
+	
+	
 
 class GiamGia(models.Model):
 	MaGG = models.CharField(primary_key=True, max_length=20)
